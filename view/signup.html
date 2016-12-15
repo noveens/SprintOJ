@@ -8,15 +8,13 @@
 		<script src="login.js"></script>
 	</head>
 	<body ng-controller="ProjectController">
-		Username : <input type="text" ng-model="User_name" ><br>
-		Password : <input type="password" ng-model="User_password"><br><br>
-		<button ng-click="send_data(User_name, User_password)" >
-			Login
+		Username : <input type="text" ng-model="Sign_name" ><br>
+		Password : <input type="password" ng-model="Sign_password"><br>
+		Re-type password : <input type="password" ng-model="Sign_re_password"><br><br>
+		<button ng-click="sign_in(Sign_name, Sign_password, Sign_re_password)" >
+			Sign in
 		</button><br>
-		<a href="localhost:3000/signup.html" >
-			Sign-up
-		</a>
-		The response is {{isCorrect}}
+		The response is {{var}}
 		<br>
 		{{$scope.uname}}
 		<a href="localhost:3000/check?uname="+$scope.uname+"&pass="$scope.pass">Redirect</a>
