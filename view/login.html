@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ProjectApp">
 	<head>
 		<title>
-			SprintOJ
+			Sprint OJ
 		</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<script src="login.js"></script>
 	</head>
-	<body>
-		Username : <input type="text" />
-		Password : <input type="password">
+	<body ng-controller="ProjectController">
+		Username : <input type="text" ng-model="Username" ><br>
+		Password : <input type="password" ng-model="User_password"><br><br>
 		<button ng-click="" >
 			Login
-		</button>
+		</button><br>
 		<button ng-click="" >
 			Sign-up
 		</button>
+		<br>
+		{{Username}}
 	</body>
 </html>
