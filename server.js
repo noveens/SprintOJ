@@ -1,5 +1,6 @@
 var express = require("express");
 var fs = require("fs");
+var passwordHash = require("password-hash");
 var app = express();
 app.use(express.static('view'));
 
@@ -26,7 +27,8 @@ app.get('/check', function(request, response) {
 			var det = users[i].split(',');
 
 			if(det[0] == uname) {
-				if(det[1] == pass) {
+				console.log("match",pass, det[1]);
+				if( passwordHash.verify(pass, det[1]) == true ) {
 					response.end("2");
 				}
 				else {
@@ -34,10 +36,8 @@ app.get('/check', function(request, response) {
 				}
 			}
 
-			else {
-				response.end("0");
-			}
 		}
+		response.end("0");
 	})
 });
 
@@ -45,10 +45,11 @@ app.get('/newUser', function(request, response) {
 
 	var uname = request.query.uname;
 	var pass = request.query.pass;
+	var hashedPass = passwordHash.generate(pass);
 
-	console.log(uname, pass);
+	console.log(uname, hashedPass);
 
-	fs.appendFile('users.csv', uname+','+pass+'\n', function(err) {
+	fs.appendFile('users.csv', uname+','+hashedPass+'\n', function(err) {
 		if(err) {
 			response.end('0');
 		}
