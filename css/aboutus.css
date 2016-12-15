@@ -1,0 +1,50 @@
+body {
+	background-color: black;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: #ffffff;
+	font-family: "Whitney SSm A", "Whitney SSm B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#my-navbar {
+	background-color: transparent;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.jumbotron {
+	background-color: black;
+	padding: 20px;
+	margin-bottom: 0px;
+	margin-top: 20px;
+}
+
+.text-center a:hover {
+	text-decoration: none;
+}
+
+img {
+	border-radius: 50%;
+}
+
+.profile {
+	height: 480px;
+	width: 380px;
+	margin-left: 40px;
+	color: white;
+}
+
+#dp {
+	height: 240px;
+	width: 240px;
+}
+
+#link:hover{
+	text-decoration: none;
+}
+
+.para{
+ 	font-size: large;
+ }

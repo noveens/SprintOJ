@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html ng-app="ProjectApp">
 	<head>
@@ -6,13 +7,11 @@
 		</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 		<script src="login.js"></script>
-		<script type="text/javascript">
-			function my(){
-				window.location = "signup.html";
-			}
-		</script>
 	</head>
 	<body ng-controller="ProjectController">
+<!-- color this with red	 -->	
+		<span>{{message}}<br><br></span>
+<!-- the above thing -->
 		Username : <input type="text" ng-model="User_name" ><br>
 		Password : <input type="password" ng-model="User_password"><br><br>
 		<button ng-click="send_data(User_name, User_password)" >
@@ -21,7 +20,7 @@
 		<button ng-click="redirect()">
 			Sign-up
 		</button>
-		The response is {{isCorrect}}
+		<!-- Checking the response .. => The response is {{isCorrect}} -->
 		<br>
 	</body>
 </html>
