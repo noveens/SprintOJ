@@ -26,4 +26,8 @@ Logmain.controller('ProjectController', function($scope, $http){
 			$scope.newLogin = response;
 		});
 	};
+
+	$scope.redirect = function(){
+		window.location = 'signup.html';
+	};
 });
