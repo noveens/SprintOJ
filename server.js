@@ -27,15 +27,15 @@ app.get('/check', function(request, response) {
 
 			if(det[0] == uname) {
 				if(det[1] == pass) {
-					response.send("2");
+					response.end("2");
 				}
 				else {
-					response.send("1");
+					response.end("1");
 				}
 			}
 
 			else {
-				response.send("0");
+				response.end("0");
 			}
 		}
 	})
@@ -58,5 +58,4 @@ app.get('/newUser', function(request, response) {
 });
 
 var server = app.listen(3000, function() {
-	//console.log("User++");
 });
