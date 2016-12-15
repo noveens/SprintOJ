@@ -21,13 +21,10 @@ app.get('/check', function(request, response) {
 		var uname = request.query.uname;
 		var pass = request.query.pass;
 
-		console.log(uname, pass);
-
 		for(var i=0;i<n;i++) {
 			var det = users[i].split(',');
 
 			if(det[0] == uname) {
-				console.log("match",pass, det[1]);
 				if( passwordHash.verify(pass, det[1]) == true ) {
 					response.end("2");
 				}
@@ -46,16 +43,39 @@ app.get('/newUser', function(request, response) {
 	var uname = request.query.uname;
 	var pass = request.query.pass;
 	var hashedPass = passwordHash.generate(pass);
+	var fl = 0;
 
-	console.log(uname, hashedPass);
-
-	fs.appendFile('users.csv', uname+','+hashedPass+'\n', function(err) {
+	fs.readFile('users.csv', function(err, data) {
 		if(err) {
-			response.end('0');
+			response.send("error!");
 		}
-	});
 
-	response.end('1');
+		var users = data.toString().split('\n');
+		var n = users.length;
+		var uname = request.query.uname;
+		var pass = request.query.pass;
+
+		for(var i=0;i<n;i++) {
+			var det = users[i].split(',');
+
+			if(det[0] == uname) {
+				fl = 1;
+				response.end('0')
+				break;
+			}
+		}
+
+		if(fl == 0) {
+			fs.appendFile('users.csv', uname+','+hashedPass+'\n', function(err) {
+				if(err) {
+					response.end('0');
+				}
+			});
+			response.end('1');
+		}
+	})
+
+
 });
 
 var server = app.listen(3000, function() {
