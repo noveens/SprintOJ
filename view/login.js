@@ -18,13 +18,18 @@ Logmain.controller('ProjectController', function($scope, $http){
 		sign_name = username;
 		sign_pass = password;
 		sign_re_pass = re_password;
-		var link = 'newUser?uname='+sign_name+'&pass='+sign_pass;
-		alert(link);
-		$http.get(link)
-		.success(function(response){
-			alert(response);
-			$scope.newLogin = response;
-		});
+		if(sign_pass != sign_re_pass){
+			alert("Your passwords doesn't match. Please check.");
+		}
+		else{
+			var link = 'newUser?uname='+sign_name+'&pass='+sign_pass;
+			alert(link);
+			$http.get(link)
+			.success(function(response){
+				alert(response);
+				$scope.newLogin = response;
+			});
+		}
 	};
 
 	$scope.redirect = function(){
