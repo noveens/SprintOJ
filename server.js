@@ -55,6 +55,10 @@ app.get('/newUser', function(request, response) {
 		var uname = request.query.uname;
 		var pass = request.query.pass;
 
+		if(uname == 'undefined') {
+			response.end('0');
+		}
+
 		for(var i=0;i<n;i++) {
 			var det = users[i].split(',');
 
@@ -65,7 +69,7 @@ app.get('/newUser', function(request, response) {
 			}
 		}
 
-		if(fl == 0) {
+		if(fl == 0 && uname != 'undefined') {
 			fs.appendFile('users.csv', uname+','+hashedPass+'\n', function(err) {
 				if(err) {
 					response.end('0');
