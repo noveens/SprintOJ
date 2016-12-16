@@ -99,6 +99,7 @@ app.post("/upload", function(request, response) {
         }
         else {
         	var send = [];
+        	var c = 0;
             for(var i=1;i<=3;i++) {
 				exec("bash ./bash/script.sh power " + i, function puts(error, stdout, stderr) { 
 					if(stdout[2] == "0") {
@@ -111,14 +112,12 @@ app.post("/upload", function(request, response) {
 						tt[stdout[0]] = 0;
 						send.push(tt);
 					}
-				});
-
-				if(i == 3) {
-					setTimeout(function() {
+					c++;
+					if(c == 3) {
 						console.log("checking complete!");
 		            	response.send(send);
-		            }, 500);
-				}
+					}
+				});
 	        }
         }
     });
