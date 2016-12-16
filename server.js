@@ -100,8 +100,9 @@ app.post("/upload", function(request, response) {
         else {
         	var send = [];
         	var c = 0;
+        	var name = request.query.name;
             for(var i=1;i<=3;i++) {
-				exec("bash ./bash/script.sh power " + i, function puts(error, stdout, stderr) { 
+				exec("bash ./bash/script.sh " + name + " " + i, function puts(error, stdout, stderr) { 
 					if(stdout[2] == "0") {
 						var tt = {};
 						tt[stdout[0]] = 1;
