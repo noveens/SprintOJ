@@ -4,6 +4,7 @@ var passwordHash = require("password-hash");
 var fileUpload = require('express-fileupload');
 var exec = require("child_process").exec;
 var sys = require("sys");
+var url = require("url");
 var app = express();
 app.use(express.static('view'));
 app.use(fileUpload());
@@ -91,6 +92,8 @@ app.post("/upload", function(request, response) {
         response.send('Noooo files were uploaded.');
         return;
     }
+
+    //url.parse(request.url, true);
  
     sampleFile = request.files.code;
     sampleFile.mv('./temp/code.cpp', function(err) {
@@ -100,7 +103,7 @@ app.post("/upload", function(request, response) {
         else {
         	var send = [];
         	var c = 0;
-        	var name = request.headers.name;
+        	var name = request.body.name;
         	console.log("bash ./bash/script.sh " + name);
             for(var i=1;i<=3;i++) {
 				exec("bash ./bash/script.sh " + name + " " + i, function puts(error, stdout, stderr) { 
