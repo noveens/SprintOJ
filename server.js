@@ -100,7 +100,8 @@ app.post("/upload", function(request, response) {
         else {
         	var send = [];
         	var c = 0;
-        	var name = request.query.name;
+        	var name = request.headers.name;
+        	console.log("bash ./bash/script.sh " + name);
             for(var i=1;i<=3;i++) {
 				exec("bash ./bash/script.sh " + name + " " + i, function puts(error, stdout, stderr) { 
 					if(stdout[2] == "0") {
