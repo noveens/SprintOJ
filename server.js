@@ -1,8 +1,12 @@
 var express = require("express");
 var fs = require("fs");
 var passwordHash = require("password-hash");
+var fileUpload = require('express-fileupload');
+var exec = require("child_process").exec;
+var sys = require("sys");
 var app = express();
 app.use(express.static('view'));
+app.use(fileUpload());
 
 app.get('/', function(request, response) {
 	response.redirect("login.html")
@@ -78,8 +82,46 @@ app.get('/newUser', function(request, response) {
 			response.end('1');
 		}
 	})
+});
 
+app.post("/upload", function(request, response) {
+	var sampleFile;
+ 
+    if (!request.files) {
+        response.send('Noooo files were uploaded.');
+        return;
+    }
+ 
+    sampleFile = request.files.code;
+    sampleFile.mv('./temp/code.cpp', function(err) {
+        if (err) {
+            response.status(500).send(err);
+        }
+        else {
+        	var send = [];
+            for(var i=1;i<=3;i++) {
+				exec("bash ./bash/script.sh power " + i, function puts(error, stdout, stderr) { 
+					if(stdout[2] == "0") {
+						var tt = {};
+						tt[stdout[0]] = 1;
+						send.push(tt);
+					}
+					else {
+						var tt = {};
+						tt[stdout[0]] = 0;
+						send.push(tt);
+					}
+				});
 
+				if(i == 3) {
+					setTimeout(function() {
+						console.log("checking complete!");
+		            	response.send(send);
+		            }, 500);
+				}
+	        }
+        }
+    });
 });
 
 var server = app.listen(3000, function() {
