@@ -6,8 +6,11 @@ var exec = require("child_process").exec;
 var sys = require("sys");
 var url = require("url");
 var app = express();
+
 app.use(express.static('view'));
 app.use(fileUpload());
+
+
 
 app.get('/', function(request, response) {
 	response.redirect("login.html")
