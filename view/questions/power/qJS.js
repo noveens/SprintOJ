@@ -87,6 +87,10 @@ myApp.controller('ProjectController', ['$scope', '$http' ,'fileUpload', function
 
 var verdict = [0,0,0];
 
+var score = [0.0 ,0.0,0.0];
+
+var totalScore = 0;
+
 var myApp = angular.module('ProjectApp', []);
  
      myApp.directive('fileModel', ['$parse', function ($parse) {
@@ -132,12 +136,15 @@ var myApp = angular.module('ProjectApp', []);
                   }
               }
               console.log('Verdict is =>'+verdict);
-              if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";}
-              else{document.getElementById("testCase1").src="redCross.png";}
-              if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";}
-              else{document.getElementById("testCase2").src="redCross.png";}
-              if(verdict[2]==1){document.getElementById("testCase3").src="greenTick.jpg";}
-              else{document.getElementById("testCase3").src="redCross.png";}
+              if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";document.getElementById("testCase1Row").style.backgroundColor="Chartreuse";score[0]=33.3;}
+              else{document.getElementById("testCase1").src="redCross.png";document.getElementById("testCase1Row").style.backgroundColor="OrangeRed";score[0]=0.0;}
+              if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";document.getElementById("testCase2Row").style.backgroundColor="Chartreuse";score[1]=33.3;}
+              else{document.getElementById("testCase2").src="redCross.png";document.getElementById("testCase2Row").style.backgroundColor="OrangeRed";score[1]=0.0;}
+              if(verdict[2]==1){document.getElementById("testCase3").src="greenTick.jpg";document.getElementById("testCase3Row").style.backgroundColor="Chartreuse";score[2]=33.3;}
+              else{document.getElementById("testCase3").src="redCross.png";document.getElementById("testCase3Row").style.backgroundColor="OrangeRed";score[2]=0.0;}
+              totalScore = score[0] + score[1] + score[2];
+              if(totalScore == 99.89999999999999){totalScore=100;}
+              document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
            })
  
            .error(function(){
