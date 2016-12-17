@@ -125,20 +125,11 @@ var myApp = angular.module('ProjectApp', []);
            })
  
            .success(function(data){
-<<<<<<< HEAD
+
             if(data == "No files were uploaded."){
               alert("please upload file");
             }
             else{
-
-=======
-            if(data=='Noooo files were uploaded.'){
-                Upload=0;
-              }else{
-                Upload=1;
-              }
-              console.log(Upload);
->>>>>>> 66a77bce8d7a3a7645382ef2660295d639543278
            		for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
