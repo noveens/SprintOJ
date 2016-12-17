@@ -18,10 +18,10 @@ app.get('/', function(request, response) {
 });
 
 app.get('/check', function(request, response) {
-	console.log("request aa gayi!");
 
 	fs.readFile('users.csv', function(err, data) {
 		if(err) {
+			console.log('some error occured!');
 			response.send("error!");
 		}
 
@@ -34,15 +34,18 @@ app.get('/check', function(request, response) {
 			var det = users[i].split(',');
 
 			if(det[0] == uname) {
-				if( passwordHash.verify(pass, det[2]) == true ) {
+				if( passwordHash.verify(pass, det[1]) == true ) {
+					console.log("new user logged in!");
 					response.end("2");
 				}
 				else {
+					console.log('some error occured!');
 					response.end("1");
 				}
 			}
 
 		}
+		console.log('some error occured!');
 		response.end("0");
 	})
 });
@@ -56,7 +59,8 @@ app.get('/newUser', function(request, response) {
 
 	fs.readFile('users.csv', function(err, data) {
 		if(err) {
-			response.send("error!");
+			response.send("0");
+			console.log('some error occured!');
 		}
 
 		var users = data.toString().split('\n');
@@ -65,6 +69,7 @@ app.get('/newUser', function(request, response) {
 		var pass = request.query.pass;
 
 		if(uname == 'undefined') {
+			console.log('some error occured!');
 			response.end('0');
 		}
 
@@ -73,17 +78,20 @@ app.get('/newUser', function(request, response) {
 
 			if(det[0] == uname) {
 				fl = 1;
+				console.log('some error occured!');
 				response.end('0')
 				break;
 			}
 		}
 
 		if(fl == 0 && uname != 'undefined') {
-			fs.appendFile('users.csv', uname+','+'0'+','+hashedPass+'\n', function(err) {
+			fs.appendFile('users.csv', uname+','+hashedPass+'\n', function(err) {
 				if(err) {
+					console.log('some error occured!');
 					response.end('0');
 				}
 			});
+			console.log("new user registred!");
 			response.end('1');
 		}
 	})
@@ -93,22 +101,19 @@ app.post("/upload", function(request, response) {
 	var sampleFile;
  
     if (!request.files) {
-        response.send('Noooo files were uploaded.');
+        response.send('No files were uploaded.');
         return;
     }
 
-    //url.parse(request.url, true);
- 
     sampleFile = request.files.code;
     sampleFile.mv('./temp/code.cpp', function(err) {
         if (err) {
-            response.status(500).send(err);
+            response.status(500).send('some error occured!');
         }
         else {
         	var send = [];
         	var c = 0;
         	var name = request.body.name;
-        	console.log("bash ./bash/script.sh " + name);
             for(var i=1;i<=3;i++) {
 				exec("bash ./bash/script.sh " + name + " " + i, function puts(error, stdout, stderr) { 
 					if(stdout[2] == "0") {
@@ -144,105 +149,162 @@ app.get("/getTestcase", function(request, response) {
 	})
 
 	temp.on("end", function() {
+		console.log("testcase number " + num + " of question : " + name + " served!");
 		response.end();
 	})
 });
 
 app.get("/getScore", function(request, response) {
 	var name = request.query.name;
+	var ques = "";
+	if(request.query.ques) {
+		ques = request.query.ques;
+	}
 
-	fs.readFile('users.csv', function(err, data) {
+	fs.readFile('score.csv', function(err, data) {
 		if(err) {
 			response.send("error!");
 		}
 
-		var users = data.toString().split('\n');
-		var n = users.length;
+		var scores = data.toString().split('\n');
+		var n = scores.length;
 
 		if(name == 'undefined') {
-			response.end(-1);
+			console.log('some error occured!');
+			response.end('0');
 		}
 
 		var fl = 0;
 
 		for(var i=0;i<n;i++) {
 
-			var det = users[i].split(',');
+			var det = scores[i].split(',');
 			if(det[0] == name) {
 				fl = 1;
-				response.end(det[1]);
+
+				if(ques) {
+					//give array of scores of that ques;
+					var n2 = det.length;
+					var fll = 0;
+					for(var j=1;j<n2;j++) {
+						var qname = det[j].split(":")[0];
+						var score = det[j].split(":")[1];
+
+						if(qname == ques) {
+							fll = 1;
+
+							var send = {};
+							for(var k=0;k<score.length;k++) {
+								send[k+1] = score[k];
+							}
+
+							console.log("scores of ques " + ques + " served for user : " + name + " !");
+							response.send(send);
+
+							break;
+						}
+					}
+					if(fll == 0) {
+						console.log('some error occured!');
+						response.end('0');
+					}
+				}
+				else {
+					// give all scores
+					var n2 = det.length;
+					var send = {};
+					for(var j=1;j<n2;j++) {
+						var qname = det[j].split(":")[0];
+						var score = det[j].split(":")[1];
+
+						var send2 = {};
+						for(var k=0;k<score.length;k++) {
+							send2[k+1] = score[k];
+						}
+						send[qname] = send2;
+					}
+					console.log("all scores served for user : " + name + " !");
+					response.send(send);
+				}
+
 				break;
 			}
 		}
 
 		if(fl == 0) {
-			response.end(-1);
+			console.log('some error occured!');
+			response.end('0');
 		}
 	})
 });
 
 app.get('/addScore', function(request, response) {
 	var name = request.query.name;
-	var add = request.query.add;
+	var str = request.query.str;
+	var ques = request.query.ques;
 
-	/*replace({
-	  regex: "foo",
-	  replacement: "bar",
-	  paths: ['.'],
-	  recursive: true,
-	  silent: true,
-	});*/
-
-	fs.readFile('users.csv', function(err, data) {
+	fs.readFile('score.csv', function(err, data) {
 		if(err) {
+			console.log('some error occured!');
 			response.send("error!");
 		}
 
-		var users = data.toString().split('\n');
-		var n = users.length;
-		var fl = 0;
+		var scores = data.toString().split('\n');
+		var n = scores.length;
 
 		if(name == 'undefined') {
+			console.log('some error occured!');
 			response.end('0');
 		}
 
+		var fl = 0;
+		var write = "";
+
 		for(var i=0;i<n;i++) {
-			var det = users[i].split(',');
-
+			var det = scores[i].split(',');
 			if(det[0] == name) {
-				var temp = Number(det[1]) + Number(add);
-				var rep = det[0] + "," + det[1];
-				var rep2 = det[0]+","+temp.toString();
-				
-				replace({
-				  regex: rep,
-				  replacement: rep2,
-				  paths: ['./users.csv'],
-				  recursive: false,
-				  silent: true,
-				});
-
-				console.log("score of " + name + " changed by " + add + ", new score = " + temp);
-
-				response.end('1');
 				fl = 1;
-				break;
+				var n2 = det.length;
+				write += det[0];
+				write += ",";
+				for(var j=1;j<n2;j++) {
+					var qname = det[j].split(':')[0];
+					var marks = det[j].split(':')[1];
+
+					if(qname == ques) {
+						write = write + ques + ":" + str;
+					}
+					else {
+						write = write + qname + ":" + marks;
+					}
+
+					if(j != n2-1) {
+						write += ",";
+					}
+				}
+				if(i != n-1) write += '\n';
+			}
+			else {
+				write += scores[i];
+				if(i != n-1) write += '\n';
 			}
 		}
 
 		if(fl == 0) {
+			console.log('some error occured!');
 			response.end('0');
 		}
-
-		/*if(fl == 1 && uname != 'undefined') {
-			fs.appendFile('users.csv', uname+','+hashedPass+','+'0'+'\n', function(err) {
+		else {
+			fs.writeFile("score.csv", write, function(err) {
 				if(err) {
-					response.end('0');
+					console.log('some error occured!');
+					response.send('0');
 				}
-			});
-			response.end('1');
-		}*/
-	})
+				console.log("score of question " + ques + " changed to " + str + " for user : " + name + " !");
+				response.send('1');
+			})
+		}
+	});
 
 });
 
