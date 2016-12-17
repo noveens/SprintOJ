@@ -122,6 +122,10 @@ var myApp = angular.module('ProjectApp', []);
            })
  
            .success(function(data){
+            if(data == "No files were uploaded."){
+              alert("please upload file");
+            }
+            else{
            		for(i=0;i<data.length;i++){
                   console.log('Loop '+data[i][1]);
                   if(data[i][1] != undefined){
@@ -144,7 +148,9 @@ var myApp = angular.module('ProjectApp', []);
               totalScore = score[0] + score[1] + score[2];
               if(totalScore == 99.89999999999999){totalScore=100;}
               document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
-           })
+                            smoothScroll(document.getElementById('second'));
+
+           }})
  
            .error(function(){
            });
