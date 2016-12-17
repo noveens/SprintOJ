@@ -14,6 +14,7 @@ var myApp = angular.module('ProjectApp', []);
            restrict: 'A',
            link: function(scope, element, attrs) {
               var model = $parse(attrs.fileModel);
+              console.log(model);
               var modelSetter = model.assign;
  
               element.bind('change', function(){
@@ -78,7 +79,14 @@ var myApp = angular.module('ProjectApp', []);
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload";
+           var fileName = file.name;
+           var ext = fileName.split('.').pop();
+           if(ext == "c"){
            fileUpload.uploadFileToUrl(file, uploadUrl);
+         }
+         else{
+          alert("wrong file extension");
+         }
         };
      }]);
 

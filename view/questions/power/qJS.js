@@ -164,7 +164,15 @@ var myApp = angular.module('ProjectApp', []);
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload";
+           var fileName = file.name;
+           var ext = fileName.split('.').pop();
+           if(ext == "c"){
+           
            fileUpload.uploadFileToUrl(file, uploadUrl);
+         }
+         else{
+          alert("wrong file extension");
+         }
         };
      }]);
 
