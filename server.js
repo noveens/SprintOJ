@@ -184,6 +184,35 @@ app.get("/getTestcase", function(request, response) {
 	})
 });
 
+app.get("/allScore", function(request, response) {
+	fs.readFile('score.csv', function(err, data) {
+		if(err) {
+			response.send("error!");
+		}
+
+		var scores = data.toString().split('\n');
+		var n = scores.length;
+
+		var send = {};
+
+		for(var i=0;i<n;i++) {
+			var temp = scores[i].split(",");
+			var s =0;
+			for(var j=1;j<temp.length;j++) {
+				var score = temp[j].split(':')[1];
+				var c = 0;
+				for(var k=0;k<score.length;k++) {
+					if(score[k] == '1') c++;
+				}
+				s += 100 * (c/score.length);
+			}
+			send[temp[0]] = s;
+		}
+
+		response.send(send);
+	});
+});
+
 app.get("/getScore", function(request, response) {
 	var name = request.query.name;
 	var ques = "";
