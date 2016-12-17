@@ -1,4 +1,7 @@
 
+var verdict = [0,0,0];
+
+
 var myApp = angular.module('ProjectApp', []);
  
      myApp.directive('fileModel', ['$parse', function ($parse) {
@@ -31,10 +34,26 @@ var myApp = angular.module('ProjectApp', []);
            })
  
            .success(function(data){
-           		console.log(data[0]);
-           		console.log(data[1]);
-           		console.log(data[2]);
-           })
+              for(i=0;i<data.length;i++){
+                  console.log('Loop '+data[i][1]);
+                  if(data[i][1] != undefined){
+                    verdict[0]=data[i][1];
+                  }
+                  if(data[i][2] != undefined){
+                    verdict[1]=data[i][2];
+                  }
+                  if(data[i][3] != undefined){
+                    verdict[2]=data[i][3];
+                  }
+              }
+              console.log('Verdict is =>'+verdict);
+              if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";}
+              else{document.getElementById("testCase1").src="redCross.png";}
+              if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";}
+              else{document.getElementById("testCase2").src="redCross.png";}
+              if(verdict[2]==1){document.getElementById("testCase3").src="greenTick.jpg";}
+              else{document.getElementById("testCase3").src="redCross.png";}
+           	})
  
            .error(function(){
            });
@@ -48,3 +67,27 @@ var myApp = angular.module('ProjectApp', []);
            fileUpload.uploadFileToUrl(file, uploadUrl);
         };
      }]);
+
+     window.smoothScroll = function(target) {
+            $('#second').show();
+            var scrollContainer = target;
+            do { //find scroll container
+                scrollContainer = scrollContainer.parentNode;
+                if (!scrollContainer) return;
+                scrollContainer.scrollTop += 1;
+            } while (scrollContainer.scrollTop == 0);
+
+            var targetY = 0;
+            do { //find the top of target relatively to the container
+                if (target == scrollContainer) break;
+                targetY += target.offsetTop;
+            } while (target = target.offsetParent);
+
+            scroll = function(c, a, b, i) {
+                i++; if (i > 30) return;
+                c.scrollTop = a + (b - a) / 30 * i;
+                setTimeout(function(){ scroll(c, a, b, i); }, 20);
+            }
+            // start scrolling
+            scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+        }

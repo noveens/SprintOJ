@@ -1,63 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AngularJS File Upoad Example with $http and FormData</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
-  <script>
-	angular.module('fupApp', [])
-        .directive('ngFiles', ['$parse', function ($parse) {
-
-            function fn_link(scope, element, attrs) {
-                var onChange = $parse(attrs.ngFiles);
-                element.on('change', function (event) {
-                    onChange(scope, { $files: event.target.files });
-                });
-            };
-
-            return {
-                link: fn_link
-            }
-        } ])
-        .controller('fupController', function ($scope, $http) {
-
-            var formdata = new FormData();
-            $scope.getTheFiles = function ($files) {
-                angular.forEach($files, function (value, key) {
-                    formdata.append(key, value);
-                });
-		console.log(formdata);
-            };
-
-            // NOW UPLOAD THE FILES.
-            $scope.uploadFiles = function () {
-
-                var request = {
-                    method: 'POST',
-                    url: '/upload/',
-                    data: formdata,
-                    headers: {
-                        'Content-Type': undefined
-                    }
-                };
-
-                // SEND THE FILES.
-                $http(request)
-                    .success(function (d) {
-                        alert(d);
-                    })
-                    .error(function () {
-                    });
-            }
-        });
-  </script>
-</head>
-
-<body ng-app="fupApp">
-    <div ng-controller="fupController">
-
-        <input type="file" id="file1" name="file" multiple
-            ng-files="getTheFiles($files)" />
-
-        <input type="button" ng-click="uploadFiles()" value="Upload" />
-    </div>
-</body>
+// Iterative C program to compute modular power
+#include <stdio.h>
+ 
+/* Iterative Function to calculate (x^n)%p in O(logy) */
+int power(int x, unsigned int y, int p)
+{
+    int res = 1;      // Initialize result
+ 
+    x = x % p;  // Update x if it is more than or 
+                // equal to p
+ 
+    while (y > 0)
+    {
+        // If y is odd, multiply x with result
+        if (y & 1)
+            res = (res*x) % p;
+ 
+        // y must be even now
+        y = y>>1; // y = y/2
+        x = (x*x) % p;  
+    }
+    return res;
+}
+ 
+// Driver program to test above functions
+int main()
+{
+   int n,m;
+   scanf("%d %d",&n,&m);
+   printf("%d\n", power(n, m, 1000000007));
+   return 0;
+}
