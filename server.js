@@ -91,7 +91,37 @@ app.get('/newUser', function(request, response) {
 					response.end('0');
 				}
 			});
-			console.log("new user registred!");
+
+			fs.readFile('score.csv', function(err, data) {
+				if(err) {
+					console.log('some error occured!');
+					response.send("error!");
+				}
+
+				var scores = data.toString().split('\n')[0];
+
+				var temp = scores.split(',');
+				var send = "";
+				var n = temp.length;
+
+				for(var i=1;i<n;i++) {
+					var a = temp[i].split(":")[0];
+					var b = temp[i].split(":")[1].length;
+
+					send += a + ":";
+					while(b--) send +="0";
+					if(i!=n-1) send +=",";
+				}
+
+				fs.appendFile('score.csv', uname+','+send+'\n', function(err) {
+					if(err) {
+						console.log('some error occured!');
+						response.end('0');
+					}
+				});
+			});
+
+			console.log("new user registered!");
 			response.end('1');
 		}
 	})
