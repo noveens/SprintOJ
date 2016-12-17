@@ -131,5 +131,21 @@ app.post("/upload", function(request, response) {
     });
 });
 
+app.get("/getTestcase", function(request, response) {
+	var name = request.query.name;
+	var num = request.query.num;
+
+	var string = "./testcases/" + name + "/in_" + num;
+	var temp = fs.createReadStream(string, {start: 0});
+	
+	temp.on("data", function(data) {
+		response.write(data);
+	})
+
+	temp.on("end", function() {
+		response.end();
+	})
+});
+
 var server = app.listen(3000, function() {
 });

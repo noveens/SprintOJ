@@ -1,32 +1,29 @@
-// Iterative C program to compute modular power
-#include <stdio.h>
- 
-/* Iterative Function to calculate (x^n)%p in O(logy) */
-int power(int x, unsigned int y, int p)
+#include<stdio.h>
+
+int cmp(void *a, void *b)
 {
-    int res = 1;      // Initialize result
- 
-    x = x % p;  // Update x if it is more than or 
-                // equal to p
- 
-    while (y > 0)
-    {
-        // If y is odd, multiply x with result
-        if (y & 1)
-            res = (res*x) % p;
- 
-        // y must be even now
-        y = y>>1; // y = y/2
-        x = (x*x) % p;  
-    }
-    return res;
+	return *(int *)a - *(int *)b;
 }
- 
-// Driver program to test above functions
-int main()
+
+int main(void)
 {
-   int n,m;
-   scanf("%d %d",&n,&m);
-   printf("%d\n", power(n, m, 1000000007));
-   return 0;
+	int n;
+	scanf("%d", &n);
+	int arr[n],i,cum[n];
+	for(i=0;i<n;i++)
+		scanf("%d", &arr[i]);
+	qsort(arr,n,sizeof(int),cmp);
+	for(i=n-1;i>=0;i--)
+	{
+		if(i==n-1)
+			cum[i]=arr[i];
+		else
+		{
+			cum[i]=cum[i+1]+arr[i];
+		}
+	}
+	for(i=0;i<n;i++)
+		printf("%d ", cum[i]);
+	printf("\n");
+	return(0);
 }
