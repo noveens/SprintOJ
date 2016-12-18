@@ -195,10 +195,10 @@ var myApp = angular.module('ProjectApp', []);
           .success(function(response){
             oldScores = response;
             console.log(localStorage.getItem("storageName"));
-            if(response[1]=='-'){document.getElementById('aston').src="na.png";$scope.score=0.0;}
-            else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('aston').src="redCross.png";$scope.score=0.0;}
-            else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('aston').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('aston').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
+            if(Number(response[1])=='-'){document.getElementById('aston').src="na.png";$scope.score=0.0;}
+            else if(Number(response[1])==0 && Number(response[2])==0 & Number(response[3])==0){document.getElementById('aston').src="redCross.png";$scope.score=0.0;}
+            else if(Number(response[1])==1 && Number(response[2])==1 & Number(response[3])==1){document.getElementById('aston').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('aston').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
         };

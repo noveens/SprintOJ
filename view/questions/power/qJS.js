@@ -158,7 +158,7 @@ var myApp = angular.module('ProjectApp', []);
                smoothScroll(document.getElementById('second'));
 
 ///////////////////// cheking score to send to api addScore to update score/////////////
-              if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
+              if(Number(verdict[0])+Number(verdict[1])+Number(verdict[2]) > Number(oldScores[1])+Number(oldScores[2])+Number(oldScores[3])){
                 var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
                 $http.get(link)
                 .success(function(response){
@@ -199,10 +199,10 @@ var myApp = angular.module('ProjectApp', []);
             console.log(response);
             console.log(localStorage.getItem("storageName"))
             oldScores = response;
-            if(response[1]=='-'){document.getElementById('power').src="na.png";$scope.score=0.0;}
-            else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('power').src="redCross.png";$scope.score=0.0;}
-            else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('power').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('power').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
+            if(Number(response[1])=='-'){document.getElementById('power').src="na.png";$scope.score=0.0;}
+            else if(Number(response[1])==0 && Number(response[2])==0 & Number(response[3])==0){document.getElementById('power').src="redCross.png";$scope.score=0.0;}
+            else if(Number(response[1])==1 && Number(response[2])==1 & Number(response[3])==1){document.getElementById('power').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('power').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
         };
