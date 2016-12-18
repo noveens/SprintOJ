@@ -68,6 +68,18 @@ var myApp = angular.module('ProjectApp', []);
               if(totalScore == 99.89999999999999){totalScore=100;}
               document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
               smoothScroll(document.getElementById('second'));
+
+              ///////////////////// cheking score to send to api addScore to update score/////////////
+              if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
+                $http.get(link)
+                .success(function(response){
+                  
+                });
+              }
+ 
+////////////////////////////////////////////////////////////////////////////////////////
+              
            	}})
 
             .error(function(){

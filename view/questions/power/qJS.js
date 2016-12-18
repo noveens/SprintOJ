@@ -91,6 +91,8 @@ var score = [0.0 ,0.0,0.0];
 
 var Upload=0;
 
+var oldScores;
+
 var totalScore = 0;
 
 var myApp = angular.module('ProjectApp', []);
@@ -154,7 +156,19 @@ var myApp = angular.module('ProjectApp', []);
               if(totalScore == 99.89999999999999){totalScore=100;}
               document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
                smoothScroll(document.getElementById('second'));
+
+///////////////////// cheking score to send to api addScore to update score/////////////
+              if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
+                $http.get(link)
+                .success(function(response){
+                  
+                });
+              }
+ 
+////////////////////////////////////////////////////////////////////////////////////////
            }})
+ 
  
            .error(function(){
            });
@@ -175,6 +189,7 @@ var myApp = angular.module('ProjectApp', []);
           $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=power')
           .success(function(response){
             console.log(response);
+            oldScores = response;
             if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('power').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('power').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('power').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
