@@ -130,6 +130,7 @@ var myApp = angular.module('ProjectApp', []);
               localStorage.setItem("messagePower",'Please upload a file to continue');
             }
             else{
+              localStorage.setItem("messagePower",'');
            		for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
@@ -171,9 +172,9 @@ var myApp = angular.module('ProjectApp', []);
 
          $scope.getStatus = function(){
           var userLoggedIn = localStorage.getItem("storageName");
-          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=power')
           .success(function(response){
-            console.log(response + userLoggedIn);
+            console.log(response);
             if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('power').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('power').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('power').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}

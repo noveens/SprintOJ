@@ -132,6 +132,7 @@ var myApp = angular.module('ProjectApp', []);
               
             }
             else{
+               localStorage.setItem("messageOstap",'');
            		for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
@@ -183,13 +184,14 @@ var myApp = angular.module('ProjectApp', []);
         };
 
          $scope.getStatus = function(){
-          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=grasshopper')
           .success(function(response){
             if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('ostap').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
+
         };
         $scope.getStatus();
 

@@ -128,6 +128,7 @@ var myApp = angular.module('ProjectApp', []);
                localStorage.setItem("messageAston",'Please upload a file to continue');
             }
             else{
+              localStorage.setItem("messageAston",'');
            		console.log(data);
               for(i=0;i<data.length;i++){
                   
@@ -166,7 +167,7 @@ var myApp = angular.module('ProjectApp', []);
            var uploadUrl = "/upload";
            fileUpload.uploadFileToUrl(file, uploadUrl);
             $scope.messageAston = localStorage.getItem('messageAston');
-        };
+          };
 
         $scope.getStatus = function(){
           $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
