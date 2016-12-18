@@ -130,7 +130,7 @@ var myApp = angular.module('ProjectApp', []);
             }
             else{
               localStorage.setItem("messageAston",'');
-           		console.log(data);
+           		//console.log(data);
               for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
@@ -166,7 +166,7 @@ var myApp = angular.module('ProjectApp', []);
                 });
               }
 
-              if(oldScores == 0){
+              if(oldScores[1] == '-'){
                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=chess&str=000';
                 $http.get(link)
                 .success(function(response){
@@ -195,7 +195,7 @@ var myApp = angular.module('ProjectApp', []);
           .success(function(response){
             oldScores = response;
             console.log(localStorage.getItem("storageName"));
-            if(response==0){document.getElementById('aston').src="na.png";$scope.score=0.0;}
+            if(response[1]=='-'){document.getElementById('aston').src="na.png";$scope.score=0.0;}
             else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('aston').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('aston').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('aston').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
