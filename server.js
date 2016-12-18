@@ -115,7 +115,7 @@ app.get('/newUser', function(request, response) {
 
 				fs.appendFile('score.csv', uname+','+send+'\n', function(err) {
 					if(err) {
-						console.log('some error occured!');
+						console.log('2:some error occured!');
 						response.end('0');
 					}
 				});
