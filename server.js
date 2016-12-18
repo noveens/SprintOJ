@@ -109,7 +109,7 @@ app.get('/newUser', function(request, response) {
 					var b = temp[i].split(":")[1].length;
 
 					send += a + ":";
-					while(b--) send +="0";
+					while(b--) send +="-";
 					if(i!=n-1) send +=",";
 				}
 
