@@ -111,6 +111,7 @@ var myApp = angular.module('ProjectApp', []);
      }]);
  
      myApp.service('fileUpload', ['$http', function ($http) {
+      
         this.uploadFileToUrl = function(file, uploadUrl){
            var fd = new FormData();
            fd.append('code', file);
@@ -126,7 +127,9 @@ var myApp = angular.module('ProjectApp', []);
            .success(function(data){
 
             if(data == "No files were uploaded."){
-              alert("please upload file");
+              
+              localStorage.setItem("messageOstap",'Please upload a file to continue');
+              
             }
             else{
            		for(i=0;i<data.length;i++){
@@ -151,21 +154,46 @@ var myApp = angular.module('ProjectApp', []);
               totalScore = score[0] + score[1] + score[2];
               if(totalScore == 99.89999999999999){totalScore=100;}
               document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
-                            smoothScroll(document.getElementById('second'));
+              smoothScroll(document.getElementById('second'));
+
+              $http.get('/addScore')
+              .success(function(response){
+                  console.log(response);
+             });
 
            }})
  
+
+         
            .error(function(){
            });
+
+
+
         }
      }]);
  
-     myApp.controller('ProjectController', ['$scope', 'fileUpload', function($scope, fileUpload){
+     myApp.controller('ProjectController', ['$scope', '$http','fileUpload', function($scope, $http,fileUpload){
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload";
            fileUpload.uploadFileToUrl(file, uploadUrl);
+           $scope.messageOstap = localStorage.getItem('messageOstap');
+           
         };
+
+         $scope.getStatus = function(){
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
+          .success(function(response){
+            if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
+            else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('ostap').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
+          })
+          ;
+        };
+        $scope.getStatus();
+
+
      }]);
 
      window.smoothScroll = function(target) {

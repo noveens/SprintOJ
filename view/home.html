@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ProjectApp" ng-controller="ProjectController">
 
 <head>
 
@@ -11,8 +11,9 @@
 
     <title>Sprint OJ</title>
 
-
-
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="login.js"></script>
+    
     <!-- Bootstrap Core CSS -->
     <link href="./startbootstrap-sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -257,7 +258,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="profile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
@@ -387,7 +388,8 @@
                         <div class="panel panel-default">
 
                             <div class="panel-heading">
-                                DataTables Advanced Tables
+                                <b>Questions<b>
+                                <span class="pull-right" role="menu"><a href="leader.html" class="btn btn-success btn-xs">Leaderboard!</a></span>
                             </div>
                         <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -397,6 +399,7 @@
                                             <th>Sr No.</th>
                                             <th>Question</th>
                                             <th>Difficulty</th>
+                                            <th>Status</th>
                                             <th>Preiview</th>
                                         </tr>
                                     </thead>
@@ -405,24 +408,28 @@
                                             <td>1</td>
                                             <td>Arpa’s hard exam and Mehrdad’s naive cheat</td>
                                             <td>Easy</td>
+                                            <td><img src="" width="20" height="20" id="naive"></td>
                                             <td><a href="questions/naive/naive.html" class="btn btn-success btn-block">Solve</a></td>
                                         </tr>
                                         <tr class="odd gradeX">
                                             <td>2</td>
                                             <td>Ostap and Grasshopper</td>
                                             <td>Easy</td>
+                                            <td><img src="" width="20" height="20" id="ostap"></td>
                                             <td><a href="questions/ostap/ostap.html" class="btn btn-success btn-block">Solve</a></td>
                                         </tr>
                                         <tr class="odd gradeX">
                                             <td>3</td>
                                             <td>Anton and Danik</td>
                                             <td>Easy</td>
+                                            <td><img src="" width="20" height="20" id="aston"></td>
                                             <td><a href="questions/aston/aston.html" class="btn btn-success btn-block">Solve</a></td>
                                         </tr>
                                         <tr class="odd gradeX">
                                             <td>4</td>
                                             <td>Modular Exponentiation</td>
                                             <td>Easy</td>
+                                            <td><img src="" width="20" height="20" id="power"></td>
                                             <td><a href="questions/power/power.html" class="btn btn-success btn-block">Solve</a></td>
                                         </tr>
                                     </tbody>

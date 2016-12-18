@@ -395,10 +395,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1 class="page-header">A. Modular Exponentiation</h1>
+                        <h1 class="page-header">A. Modular Exponentiation
+                        <img src="" width="20" height="20" id="power"></h1>
                         <div>
                         	<b>time limit per test : 1 second</b><br> 
-                            <b>memory limit per test : 256 megabytes</b>
+                            <b>memory limit per test : 256 megabytes</b><br><br>
+                            <b>Your best score: {{score}}</b>
                         </div>
                         <br><br>
                         <div>
@@ -485,7 +487,7 @@
                                     </a>
                                     <a href="#" class="list-group-item">
 										<button ng-click = "uploadFile()" >Upload File</button>
-                                        
+                                        <br><br><b>{{messagePower}}</b>
                                     </a>
                                     <a class="list-group-item">
                                     <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score. </em>
@@ -511,8 +513,8 @@
             <div id="page-wrapper">
                 <div id="container-fluid">
                     <div id="row">
-                        <h1></h1>
-                        <div class="col-lg-8"><h1></h1>
+                        
+                        <div class="col-lg-8"><br>
                         <div class="panel panel-default">
 
                             <div class="panel-heading">

@@ -396,10 +396,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1 class="page-header">A. Ostap and Grasshopper</h1>
+                        <h1 class="page-header">A. Ostap and Grasshopper
+                        <img src="" id="ostap" width="30" height="30"></h1>
                         <div> 
                             <b>time limit per test : 2 seconds</b><br>
-                            <b>memory limit per test : 256 megabytes</b>
+                            <b>memory limit per test : 256 megabytes</b><br><br>
+                            <b>Your best score: {{score}}</b>
                         </div>
                         <br><br>
                         <div>
@@ -482,11 +484,11 @@
                                         
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <button ng-click = "uploadFile()" >Upload File</button>
-                                        
+                                        <button ng-click = "uploadFile()">Upload File</button>
+                                        <br><br><b>{{messageOstap}}</b>
                                     </a>
                                     <a class="list-group-item">
-                                    <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score. </em>
+                                    <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score.</em>
                                     </a>
                                 </div>
                                 <!-- /.list-group -->
@@ -509,7 +511,7 @@
                 <div id="container-fluid">
                     <div id="row">
                         <h1></h1>
-                        <div class="col-lg-8"><h1></h1>
+                        <div class="col-lg-8"><br>
                         <div class="panel panel-default">
 
                             <div class="panel-heading">

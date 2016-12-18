@@ -395,10 +395,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1 class="page-header">A. Arpa’s hard exam and Mehrdad’s naive cheat</h1>
+                        <h1 class="page-header">A. Arpa’s hard exam and Mehrdad’s naive cheat
+                        <img src="" id="naive" width="30" height="30" /></h1>
                         <div>
                             <b>time limit per test : 1 second</b><br> 
-                            <b>memory limit per test : 256 megabytes</b>
+                            <b>memory limit per test : 256 megabytes</b><br><br>
+                            <b>Your best score: {{score}}</b>
                             <br><br>
                         </div>
                         <div>
@@ -476,7 +478,7 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <button ng-click = "uploadFile()" >Upload File</button>
-                                        
+                                        <br><br><b>{{messageNaive}}</b>
                                     </a>
                                     <a class="list-group-item">
                                     <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score. </em>
@@ -505,7 +507,7 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                 <div id="container-fluid">
                     <div id="row">
                         
-                        <div class="col-lg-8"><h1></h1>
+                        <div class="col-lg-8"><br>
                         <div class="panel panel-default">
 
                             <div class="panel-heading">

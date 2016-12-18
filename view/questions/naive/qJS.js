@@ -41,7 +41,7 @@ var myApp = angular.module('ProjectApp', []);
            .success(function(data){
             // console.log(data);
             if(data == "No files were uploaded."){
-              alert("please upload file");
+              localStorage.setItem("messageNaive",'Please upload a file to continue');
             }
             else{
               for(i=0;i<data.length;i++){
@@ -74,12 +74,26 @@ var myApp = angular.module('ProjectApp', []);
         }
      }]);
  
-     myApp.controller('ProjectController', ['$scope', 'fileUpload', function($scope, fileUpload){
+     myApp.controller('ProjectController', ['$scope', '$http','fileUpload', function($scope, $http,fileUpload){
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload";
            fileUpload.uploadFileToUrl(file, uploadUrl);
+           $scope.messageNaive = localStorage.getItem('messageNaive');
         };
+
+
+        $scope.getStatus = function(){
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
+          .success(function(response){
+            if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('naive').src="redCross.png";$scpoe.score=0.0;}
+            else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('naive').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('naive').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
+          })
+          ;
+        };
+        $scope.getStatus();
+
      }]);
 
      window.smoothScroll = function(target) {
