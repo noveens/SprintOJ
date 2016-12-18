@@ -44,7 +44,7 @@ myApp.controller('ProjectController', ['$scope', '$http' ,'fileUpload', function
 		.success(function(response){
 			console.log(response+'Aman');
 		});
-*/
+    */
 	/*	$http({
 			method: 'POST',
 			url: '/upload',
@@ -95,150 +95,157 @@ var oldScores;
 var Upload=0;
 
 var myApp = angular.module('ProjectApp', []);
- 
-     myApp.directive('fileModel', ['$parse', function ($parse) {
-        return {
-           restrict: 'A',
-           link: function(scope, element, attrs) {
-              var model = $parse(attrs.fileModel);
-              var modelSetter = model.assign;
- 
-              element.bind('change', function(){
-                 scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
-                 });
-              });
-           }
-        };
-     }]);
- 
-     myApp.service('fileUpload', ['$http', function ($http) {
+
+myApp.directive('fileModel', ['$parse', function ($parse) {
+  return {
+   restrict: 'A',
+   link: function(scope, element, attrs) {
+    var model = $parse(attrs.fileModel);
+    var modelSetter = model.assign;
+    
+    element.bind('change', function(){
+     scope.$apply(function(){
+      modelSetter(scope, element[0].files[0]);
+    });
+   });
+  }
+};
+}]);
+
+myApp.service('fileUpload', ['$http', function ($http) {
+  
+  this.uploadFileToUrl = function(file, uploadUrl){
+   var fd = new FormData();
+   fd.append('code', file);
+   
+   fd.append('name','grasshopper');
+
+
+   $http.post(uploadUrl, fd, {
+    transformRequest: angular.identity,
+    headers: {'Content-Type': undefined}
+  })
+   
+   .success(function(data){
+
+    if(data == "No files were uploaded."){
       
-        this.uploadFileToUrl = function(file, uploadUrl){
-           var fd = new FormData();
-           fd.append('code', file);
- 		   
- 		   fd.append('name','grasshopper');
-
-
-           $http.post(uploadUrl, fd, {
-              transformRequest: angular.identity,
-              headers: {'Content-Type': undefined}
-           })
- 
-           .success(function(data){
-
-            if(data == "No files were uploaded."){
-              
-              localStorage.setItem("messageOstap",'Please upload a file to continue');
-              
-            }
-            else{
-               localStorage.setItem("messageOstap",'');
-           		for(i=0;i<data.length;i++){
-                  
-                  if(data[i][1] != undefined){
-                    verdict[0]=data[i][1];
-                  }
-                  if(data[i][2] != undefined){
-                    verdict[1]=data[i][2];
-                  }
-                  if(data[i][3] != undefined){
-                    verdict[2]=data[i][3];
-                  }
-              }
-              console.log('Verdict is =>'+verdict);
-              if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
-              else{document.getElementById("testCase1").src="redCross.png";score[0]=0.0;}
-              if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
-              else{document.getElementById("testCase2").src="redCross.png";score[1]=0.0;}
-              if(verdict[2]==1){document.getElementById("testCase3").src="greenTick.jpg";score[2]=33.3;}
-              else{document.getElementById("testCase3").src="redCross.png";score[2]=0.0;}
-              totalScore = score[0] + score[1] + score[2];
-              if(totalScore == 99.89999999999999){totalScore=100;}
-              document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
-              smoothScroll(document.getElementById('second'));
+      localStorage.setItem("messageOstap",'Please upload a file to continue');
+      
+    }
+    else{
+     localStorage.setItem("messageOstap",'');
+     for(i=0;i<data.length;i++){
+      
+      if(data[i][1] != undefined){
+        verdict[0]=data[i][1];
+      }
+      if(data[i][2] != undefined){
+        verdict[1]=data[i][2];
+      }
+      if(data[i][3] != undefined){
+        verdict[2]=data[i][3];
+      }
+    }
+    console.log('Verdict is =>'+verdict);
+    if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
+    else{document.getElementById("testCase1").src="redCross.png";score[0]=0.0;}
+    if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
+    else{document.getElementById("testCase2").src="redCross.png";score[1]=0.0;}
+    if(verdict[2]==1){document.getElementById("testCase3").src="greenTick.jpg";score[2]=33.3;}
+    else{document.getElementById("testCase3").src="redCross.png";score[2]=0.0;}
+    totalScore = score[0] + score[1] + score[2];
+    if(totalScore == 99.89999999999999){totalScore=100;}
+    document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
+    smoothScroll(document.getElementById('second'));
 
 
 
 ///////////////////// cheking score to send to api addScore to update score/////////////
-              if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
-                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=grasshopper&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
-                $http.get(link)
-                .success(function(response){
-                  
-                });
-              }
+if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
+  var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=grasshopper&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
+  $http.get(link)
+  .success(function(response){
+    
+  });
+}
 
-              if(oldScores[1]=='-'){
-               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=grasshopper&str=000';
-                $http.get(link)
-                .success(function(response){
-                  
-                }); 
-              }
- 
+if(oldScores[1]=='-'){
+ var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=grasshopper&str=000';
+ $http.get(link)
+ .success(function(response){
+  
+ }); 
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
 
-           }})
- 
+}})
+   
 
-         
-           .error(function(){
-           });
-
-
-
-        }
-     }]);
- 
-     myApp.controller('ProjectController', ['$scope', '$http','fileUpload', function($scope, $http,fileUpload){
-        $scope.uploadFile = function(){
-           var file = $scope.myFile;
-           var uploadUrl = "/upload";
-           fileUpload.uploadFileToUrl(file, uploadUrl);
-           $scope.messageOstap = localStorage.getItem('messageOstap');
-           
-        };
-
-         $scope.getStatus = function(){
-
-          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=grasshopper')
-          .success(function(response){
-            oldScores = response;
-            if(Number(response[1])=='-'){document.getElementById('ostap').src="na.png";$scope.score=0.0;}
-            else if(Number(response[1])==0 && Number(response[2])==0 & Number(response[3])==0){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
-            else if(Number(response[1])==1 && Number(response[2])==1 & Number(response[3])==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('ostap').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
-          })
-          ;
-
-        };
-        $scope.getStatus();
+   
+   .error(function(){
+   });
 
 
-     }]);
 
-     window.smoothScroll = function(target) {
-            $('#second').show();
-            var scrollContainer = target;
+ }
+}]);
+
+myApp.controller('ProjectController', ['$scope', '$http','fileUpload', function($scope, $http,fileUpload){
+  $scope.uploadFile = function(){
+   var file = $scope.myFile;
+   var uploadUrl = "/upload";
+   var fileName = file.name;
+   var ext = fileName.split('.').pop();
+   if(ext == "c" || ext == "cpp"){
+     fileUpload.uploadFileToUrl(file, uploadUrl);
+     $scope.messageOstap = localStorage.getItem('messageOstap');
+   }
+   else{
+    alert("wrong file type");
+  }
+  
+};
+
+$scope.getStatus = function(){
+
+  $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=grasshopper')
+  .success(function(response){
+    oldScores = response;
+    if(Number(response[1])=='-'){document.getElementById('ostap').src="na.png";$scope.score=0.0;}
+    else if(Number(response[1])==0 && Number(response[2])==0 & Number(response[3])==0){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
+    else if(Number(response[1])==1 && Number(response[2])==1 & Number(response[3])==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score=100;}
+    else{document.getElementById('ostap').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
+  })
+  ;
+
+};
+$scope.getStatus();
+
+
+}]);
+
+window.smoothScroll = function(target) {
+  $('#second').show();
+  var scrollContainer = target;
             do { //find scroll container
-                scrollContainer = scrollContainer.parentNode;
-                if (!scrollContainer) return;
-                scrollContainer.scrollTop += 1;
+              scrollContainer = scrollContainer.parentNode;
+              if (!scrollContainer) return;
+              scrollContainer.scrollTop += 1;
             } while (scrollContainer.scrollTop == 0);
 
             var targetY = 0;
             do { //find the top of target relatively to the container
-                if (target == scrollContainer) break;
-                targetY += target.offsetTop;
+              if (target == scrollContainer) break;
+              targetY += target.offsetTop;
             } while (target = target.offsetParent);
 
             scroll = function(c, a, b, i) {
-                i++; if (i > 30) return;
-                c.scrollTop = a + (b - a) / 30 * i;
-                setTimeout(function(){ scroll(c, a, b, i); }, 20);
+              i++; if (i > 30) return;
+              c.scrollTop = a + (b - a) / 30 * i;
+              setTimeout(function(){ scroll(c, a, b, i); }, 20);
             }
             // start scrolling
             scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
-        }
+          }
