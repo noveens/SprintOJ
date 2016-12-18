@@ -143,7 +143,7 @@ var myApp = angular.module('ProjectApp', []);
                     verdict[2]=data[i][3];
                   }
               }
-              console.log('Verdict is =>'+verdict);
+              console.log(oldScores);
               if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
               else{document.getElementById("testCase1").src="redCross.png";score[0]=0.0;}
               if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
@@ -157,6 +157,7 @@ var myApp = angular.module('ProjectApp', []);
 
 
 ///////////////////// cheking score to send to api addScore to update score/////////////
+
               if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
                 var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=chess&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
                 $http.get(link)
@@ -164,7 +165,15 @@ var myApp = angular.module('ProjectApp', []);
                   
                 });
               }
- 
+
+              if(oldScores == 0){
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=chess&str=000';
+                $http.get(link)
+                .success(function(response){
+                  
+                }); 
+              }
+              
 ////////////////////////////////////////////////////////////////////////////////////////
            }})
  
@@ -185,7 +194,9 @@ var myApp = angular.module('ProjectApp', []);
           $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
           .success(function(response){
             oldScores = response;
-            if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('aston').src="redCross.png";$scope.score=0.0;}
+            console.log(localStorage.getItem("storageName"));
+            if(response==0){document.getElementById('aston').src="na.png";$scope.score=0.0;}
+            else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('aston').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('aston').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('aston').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
           })

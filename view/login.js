@@ -59,8 +59,8 @@ Logmain.controller('ProjectController', function($scope, $http){
 				$scope.newLogin = response;
 				if($scope.newLogin == 1){
 					
-					localStorage.setItem("storageName",uname);
-
+					localStorage.setItem("storageName",sign_name);
+					alert(localStorage.getItem("storageName"));
 					window.location = "home.html";
 				}
 				else{
@@ -88,28 +88,35 @@ Logmain.controller('ProjectController', function($scope, $http){
 			$scope.Answers = response;
 			console.log(response);
 			if(response!=0){
-				if(response["naive"][1]==0 && response["naive"][2]==0 && response["naive"][3]==0){document.getElementById('naive').src="redCross.png";$scope.score[0]=0.0;}
+				
+					
+				if(response["naive"][1]=='-'){document.getElementById('naive').src="na.png";}	
+				else if(response["naive"][1]==0 && response["naive"][2]==0 && response["naive"][3]==0){document.getElementById('naive').src="redCross.png";$scope.score[0]=0.0;}
 				else if(response["naive"][1]==1 && response["naive"][2]==1 && response["naive"][3]==1){document.getElementById('naive').src="greenTick.jpg";$scope.score[0]=100;}
 				else{document.getElementById('naive').src="alert.png";if(response['naive'][1]+response['naive'][2]+response['naive'][3]==1){$scope.score[0]=33.3}else{$scope.score[0]=66.6;}}
 
-				if(response["power"][1]==0 && response["power"][2]==0 && response["power"][3]==0){document.getElementById('power').src="redCross.png";$scope.score[1]=0.0;}
+				if(response["power"][1]=='-'){document.getElementById('power').src="na.png";}
+				else if(response["power"][1]==0 && response["power"][2]==0 && response["power"][3]==0){document.getElementById('power').src="redCross.png";$scope.score[1]=0.0;}
 				else if(response["power"][1]==1 && response["power"][2]==1 && response["power"][3]==1){document.getElementById('power').src="greenTick.jpg";$scope.score[1]=100;}
 				else{document.getElementById('power').src="alert.png";if(response['power'][1]+response['power'][2]+response['power'][3]==1){$scope.score[1]=33.3}else{$scope.score[1]=66.6;}}
 
-				if(response["chess"][1]==0 && response["chess"][2]==0 && response["chess"][3]==0){document.getElementById('aston').src="redCross.png";$scope.score[2]=0.0;}
+				if(response["chess"][1]=='-'){document.getElementById('aston').src="na.png";}
+				else if(response["chess"][1]==0 && response["chess"][2]==0 && response["chess"][3]==0){document.getElementById('aston').src="redCross.png";$scope.score[2]=0.0;}
 				else if(response["chess"][1]==1 && response["chess"][2]==1 && response["chess"][3]==1){document.getElementById('aston').src="greenTick.jpg";$scope.score[2]=100;}
 				else{document.getElementById('aston').src="alert.png";if(response['naive'][1]+response['naive'][2]+response['naive'][3]==1){$scope.score[0]=33.3}else{$scope.score[0]=66.6;}}
 
-				if(response["grasshopper"][1]==0 && response["grasshopper"][2]==0 && response["grasshopper"][3]==0){document.getElementById('ostap').src="redCross.png";$scope.score[3]=0.0;}
+				if(response["grasshopper"][1]=='-'){document.getElementById('ostap').src="na.png";}
+				else if(response["grasshopper"][1]==0 && response["grasshopper"][2]==0 && response["grasshopper"][3]==0){document.getElementById('ostap').src="redCross.png";$scope.score[3]=0.0;}
 				else if(response["grasshopper"][1]==1 && response["grasshopper"][2]==1 && response["grasshopper"][3]==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score[3]=100;}
 				else{document.getElementById('ostap').src="alert.png";if(response['ostap'][1]+response['ostap'][2]+response['ostap'][3]==1){$scope.score[3]=33.3}else{$scope.score[3]=66.6;}}
+			
 			}
 			else{
 //				alert('Hi');
-				document.getElementById('naive').src="alert.png";
-				document.getElementById('aston').src="alert.png";
-				document.getElementById('ostap').src="alert.png";
-				document.getElementById('power').src="alert.png";
+				document.getElementById('naive').src="na.png";
+				document.getElementById('aston').src="na.png";
+				document.getElementById('ostap').src="na.png";
+				document.getElementById('power').src="na.png";
 			}
 			console.log($scope.score);
 		});

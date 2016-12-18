@@ -169,6 +169,14 @@ var myApp = angular.module('ProjectApp', []);
                   
                 });
               }
+
+              if(oldScores == 0){
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=grasshopper&str=000';
+                $http.get(link)
+                .success(function(response){
+                  
+                }); 
+              }
  
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -198,7 +206,8 @@ var myApp = angular.module('ProjectApp', []);
           $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=grasshopper')
           .success(function(response){
             oldScores = response;
-            if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
+            if(response==0){document.getElementById('sotap').src="na.png";$scope.score=0.0;}
+            else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('ostap').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
           })

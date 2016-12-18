@@ -165,6 +165,14 @@ var myApp = angular.module('ProjectApp', []);
                   
                 });
               }
+
+              if(oldScores == 0){
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str=000';
+                $http.get(link)
+                .success(function(response){
+                  
+                }); 
+              }
  
 ////////////////////////////////////////////////////////////////////////////////////////
            }})
@@ -190,7 +198,8 @@ var myApp = angular.module('ProjectApp', []);
           .success(function(response){
             console.log(response);
             oldScores = response;
-            if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('power').src="redCross.png";$scope.score=0.0;}
+            if(response==0){document.getElementById('power').src="na.png";$scope.score=0.0;}
+            else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('power').src="redCross.png";$scope.score=0.0;}
             else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('power').src="greenTick.jpg";$scope.score=100;}
             else{document.getElementById('power').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
