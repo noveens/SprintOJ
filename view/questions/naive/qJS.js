@@ -127,6 +127,16 @@ var myApp = angular.module('ProjectApp', []);
         };
         $scope.getStatus();
 
+
+        $scope.ProgC = function(){
+          $scope.language = "C";
+        };
+
+        $scope.ProgCpp = function(){
+          $scope.language = "C++";
+        };
+
+
      }]);
 
      window.smoothScroll = function(target) {

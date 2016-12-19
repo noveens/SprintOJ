@@ -479,6 +479,23 @@
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="dropdown">
+                                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <b >Language</b>
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                            <li><a ng-click="ProgC()">C</a>
+                                            </li>
+                                            <li><a ng-click="ProgCpp()">C++</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                        </ul>
+                                        {{language}}
+                                        <!-- /.dropdown-user -->
+                                    </div>
+                                </div>
                                     <a href="#" class="list-group-item">
                                         <input type = "file" file-model = "myFile"/>
                                         
