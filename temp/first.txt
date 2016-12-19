@@ -160,7 +160,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1 class="page-header">A. Anton and Danik
+                        <h1 class="page-header">power
                         <img src="" id="aston" width="30" height="30"></h1>
                         <div>
                             <b>time limit per test : 1 second</b><br> 

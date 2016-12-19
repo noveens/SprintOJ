@@ -153,4 +153,42 @@ Logmain.controller('ProjectController', function($scope, $http){
 
 	$scope.get_scores();
 
+
+	$scope.getParams = function(Qname,Qbody,Qinp,Qout,Qi1,Qo1,Qi2,Qo2,Qi3,Qo3){
+		if(Qname){var qname=Qname.replace(' ','%20')}
+
+		if(Qbody){var qbody=Qbody.replace(' ','%20');}
+		if(Qinp){var qinp=Qinp.replace(' ','%20');}
+		if(Qout){var qout=Qout.replace(' ','%20');}
+		if(Qi1){var qi1=Qi1.replace(' ','%20');}
+		if(Qi2){var qi2=Qi2.replace(' ','%20');}
+		if(Qi3){var qi3=Qi3.replace(' ','%20');}
+		if(Qo1){var qo1=Qo1.replace(' ','%20');}
+		if(Qo2){var qo2=Qo2.replace(' ','%20');}
+		if(Qo3){var qo3=Qo3.replace(' ','%20');}
+		
+		if(Qbody){qbody=qbody.replace('\n','$20');}
+		if(Qinp){qinp=qinp.replace('\n','$20');}
+		if(Qout){qout=qout.replace('\n','$20');}
+		if(Qi1){qi1=qi1.replace('\n','$20');}
+		if(Qi2){qi2=qi2.replace('\n','$20');}
+		if(Qi3){qi3=qi3.replace('\n','$20');}
+		if(Qo1){qo1=qo1.replace('\n','$20');}
+		if(Qo2){qo2=qo2.replace('\n','$20');}
+		if(Qo2){qo3=qo3.replace('\n','$20');}
+
+		var tc=qi1+','+qo1+";"+qi2+','+qo2+";"+qi3+','+qo3;
+		var link='/createQues?text='+qbody+'&test='+tc+'&inform='+qinp+'&outform='+qout+'&name='+qname;
+		$http.get(link)
+		.success(function(response){
+			console.log('Hi123');
+			console.log(response);
+			//alert(link);
+		});
+
+
+		console.log(qbody);
+
+	};
+
 });

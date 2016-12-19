@@ -398,11 +398,12 @@ app.get("/createQues", function(request, response) {
 
 	exec("bash ./bash/script2.sh " + name, function puts(error, stdout, stderr) {
 
-		if(err) {
+		if(error) {
 			response.send('error');
 		}
 
-		console.log(stdout);
+		console.log("hello" + stdout);
+		console.log(stderr);
 		
 		fs.readFile('./temp/first.txt', function(err, data) {
 			if(err) {
@@ -411,6 +412,7 @@ app.get("/createQues", function(request, response) {
 			}
 
 			var first = data.toString();
+			first = first.replace("power", name.charAt(0).toUpperCase() + name.slice(1));
 			
 			var lines = text.split("\n");
 			var n = lines.length;
@@ -497,7 +499,7 @@ app.get("/createQues", function(request, response) {
 					var js = data.toString();
 					
 					js = js.replace("power", name);
-					js = js.replace("Power", name.charAt(0).toUpperCase() + name.slice(1));
+					js = js.replace("Power", `);
 					
 					fs.writeFile("./view/questions/" + name + "/" + "qJS.js", js, function(err) {
 						if(err) {

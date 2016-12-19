@@ -1,6 +1,8 @@
 #!/bin/bash
 
 a="./view/questions/"$1
+aa="./testcases/"$1
+mkdir $aa
 mkdir $a
 cp "./view/questions/power/alert.png" "./view/questions/power/greenTick.jpg" "./view/questions/power/na.png" "./view/questions/power/redCross.png" $a
 
