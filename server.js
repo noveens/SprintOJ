@@ -396,18 +396,40 @@ app.get("/createQues", function(request, response) {
 
 
 
-	exec("bash ./bash/script2.sh " + name, function puts(error, stdout, stderr) {
+	exec("bash ./bash/script2.sh " + name.split(" ")[0], function puts(error, stdout, stderr) {
 
 		if(error) {
+			console.log(error);
 			response.send('error');
 		}
 
-		console.log("hello" + stdout);
-		console.log(stderr);
+		fs.readFile('./score.csv', function(err, data) {
+			if(err) {
+				console.log(err);
+				response.end("error");
+			}
+
+			var temp = data.toString().split("\n");
+			var n = temp.length;
+			var send = "";
+
+			for(var i=0;i<n-1;i++) {
+				var te = temp[i];
+				te += "," + name.split(" ")[0] + ":---\n";
+				send += te;
+			}
+
+			fs.writeFile('./score.csv', send, function(err) {
+				if(err) {
+					console.log(err);
+					response.end("error");
+				}
+			})
+		});
 		
 		fs.readFile('./temp/first.txt', function(err, data) {
 			if(err) {
-				console.log('some error occured!');
+				console.log(err);
 				response.send("error!");
 			}
 
@@ -427,7 +449,7 @@ app.get("/createQues", function(request, response) {
 			n = lines.length;
 
 			for(var i=0;i<n;i++) {
-				first += "<div>" + lines[i] + "<div>";
+				first += "<div>" + lines[i] + "</div>";
 			}
 
 			first += "<br><b>Output</b><br><br>";
@@ -436,7 +458,7 @@ app.get("/createQues", function(request, response) {
 			n = lines.length;
 
 			for(var i=0;i<n;i++) {
-				first += "<div>" + lines[i] + "<div>";
+				first += "<div>" + lines[i] + "</div>";
 			}
 
 			first += "</div>" + "<br><div><b>Examples</b><br><br></div><div class=\"row\">";
@@ -451,9 +473,9 @@ app.get("/createQues", function(request, response) {
 				var inp = lines[i-1].split(",")[0];	
 				var out = lines[i-1].split(",")[1];
 
-				fs.writeFile("./testcases/" + name +"/in_" + i.toString(), inp, function(err) {
+				fs.writeFile("./testcases/" + name.split(" ")[0] +"/in_" + i.toString(), inp, function(err) {
 					if(err) {
-						console.log('some error occured!');
+						console.log(err);
 						response.send('error');
 					}
 
@@ -463,9 +485,9 @@ app.get("/createQues", function(request, response) {
 					}
 				});
 
-				fs.writeFile("./testcases/" + name +"/out_" + i.toString(), out, function(err) {
+				fs.writeFile("./testcases/" + name.split(" ")[0] +"/out_" + i.toString(), out, function(err) {
 					if(err) {
-						console.log('some error occured!');
+						console.log(err);
 						response.send('error');
 					}
 
@@ -479,10 +501,11 @@ app.get("/createQues", function(request, response) {
 			}
 
 			first += "</div></div>";
-			
+
+						
 			fs.readFile('./temp/last.txt', function(err, data) {
 				if(err) {
-					console.log('some error occured!');
+					console.log(err);
 					response.send('error');
 				}
 
@@ -492,18 +515,18 @@ app.get("/createQues", function(request, response) {
 				
 				fs.readFile('./view/questions/power/qJS.js', function(err, data) {
 					if(err) {
-						console.log('some error occured!');
+						console.log(err);
 						response.send("error!");
 					}
 
 					var js = data.toString();
 					
-					js = js.replace("power", name);
-					js = js.replace("Power", `);
+					js = js.split("power").join(name.split(" ")[0]);
+					js = js.split("Power").join((name.charAt(0).toUpperCase() + name.slice(1)).split(" ")[0]);
 					
-					fs.writeFile("./view/questions/" + name + "/" + "qJS.js", js, function(err) {
+					fs.writeFile("./view/questions/" + name.split(" ")[0] + "/" + "qJS.js", js, function(err) {
 						if(err) {
-							console.log('some error occured!');
+							console.log(err);
 							response.send('error');
 						}
 
@@ -519,10 +542,12 @@ app.get("/createQues", function(request, response) {
 					}
 				});
 
+				first = first.split("aston").join(name.split(" ")[0]);
+				first = first.split("Aston").join((name.charAt(0).toUpperCase() + name.slice(1)).split(" ")[0]);
 
-				fs.writeFile("./view/questions/" + name + "/" + name + ".html", first, function(err) {
+				fs.writeFile("./view/questions/" + name.split(" ")[0] + "/" + name.split(" ")[0] + ".html", first, function(err) {
 					if(err) {
-						console.log('some error occured!');
+						console.log(err);
 						response.send('error');
 					}
 
