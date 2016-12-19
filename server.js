@@ -367,5 +367,172 @@ app.get('/addScore', function(request, response) {
 
 });
 
+app.get("/createQues", function(request, response) {
+	var text = request.query.text;
+	var test = request.query.test;
+	var inform = request.query.inform;
+	var outform = request.query.outform;
+	var name = request.query.name;
+
+	text = text.replace("%20", " ");
+	text = text.replace("$20", "\n");
+	test = test.replace("%20", " ");
+	test = test.replace("$20", "\n");
+	inform = inform.replace("%20", " ");
+	inform = inform.replace("$20", "\n");
+	outform = outform.replace("%20", " ");
+	outform = outform.replace("$20", "\n");
+	name = name.replace("%20", " ");
+
+	var fl = 0;
+
+
+
+
+
+	// checking fl considering number of testcases to be 3 change here if neccessary.
+
+
+
+
+
+	exec("bash ./bash/script2.sh " + name, function puts(error, stdout, stderr) {
+
+		if(err) {
+			response.send('error');
+		}
+
+		console.log(stdout);
+		
+		fs.readFile('./temp/first.txt', function(err, data) {
+			if(err) {
+				console.log('some error occured!');
+				response.send("error!");
+			}
+
+			var first = data.toString();
+			
+			var lines = text.split("\n");
+			var n = lines.length;
+
+			for(var i=0;i<n;i++) {
+				first += "<div>" + lines[i] + "</div><br>";
+			}
+
+			first += "<div><b>Input</b><br><br>"
+
+			lines = inform.split("\n");
+			n = lines.length;
+
+			for(var i=0;i<n;i++) {
+				first += "<div>" + lines[i] + "<div>";
+			}
+
+			first += "<br><b>Output</b><br><br>";
+
+			lines = outform.split("\n");
+			n = lines.length;
+
+			for(var i=0;i<n;i++) {
+				first += "<div>" + lines[i] + "<div>";
+			}
+
+			first += "</div>" + "<br><div><b>Examples</b><br><br></div><div class=\"row\">";
+
+			var samp = "<div class=\"panel panel-default\"><div class=\"panel-heading\"><b>Input</b></div><div class=\"panel-body\">";
+			var samp2 = "<div class=\"panel panel-default\"><div class=\"panel-heading\"><b>Output</b></div><div class=\"panel-body\">"
+
+			lines = test.split(";");
+			n = lines.length;
+
+			for(var i=1;i<=n;i++) {
+				var inp = lines[i-1].split(",")[0];	
+				var out = lines[i-1].split(",")[1];
+
+				fs.writeFile("./testcases/" + name +"/in_" + i.toString(), inp, function(err) {
+					if(err) {
+						console.log('some error occured!');
+						response.send('error');
+					}
+
+					fl++;
+					if(fl == 9) {
+						response.send("1");
+					}
+				});
+
+				fs.writeFile("./testcases/" + name +"/out_" + i.toString(), out, function(err) {
+					if(err) {
+						console.log('some error occured!');
+						response.send('error');
+					}
+
+					fl++;
+					if(fl == 9) {
+						response.send("1");
+					}
+				});
+
+				first += samp + inp + "</div></div>" + samp2 + out + "</div></div>"; 
+			}
+
+			first += "</div></div>";
+			
+			fs.readFile('./temp/last.txt', function(err, data) {
+				if(err) {
+					console.log('some error occured!');
+					response.send('error');
+				}
+
+				var end = data.toString();
+				
+				first += end;
+				
+				fs.readFile('./view/questions/power/qJS.js', function(err, data) {
+					if(err) {
+						console.log('some error occured!');
+						response.send("error!");
+					}
+
+					var js = data.toString();
+					
+					js = js.replace("power", name);
+					js = js.replace("Power", name.charAt(0).toUpperCase() + name.slice(1));
+					
+					fs.writeFile("./view/questions/" + name + "/" + "qJS.js", js, function(err) {
+						if(err) {
+							console.log('some error occured!');
+							response.send('error');
+						}
+
+						fl++;
+						if(fl == 9) {
+							response.send("1");
+						}
+					});
+
+					fl++;
+					if(fl == 9) {
+						response.send("1");
+					}
+				});
+
+
+				fs.writeFile("./view/questions/" + name + "/" + name + ".html", first, function(err) {
+					if(err) {
+						console.log('some error occured!');
+						response.send('error');
+					}
+
+					fl++;
+					if(fl == 9) {
+						response.send("1");
+					}
+				});
+			});
+		});
+	});
+});
+
 var server = app.listen(3000, function() {
 });
