@@ -17,8 +17,14 @@ Leader.controller('MyController',function($scope, $http){
 			    return second[1] - first[1];
 			});
 
-			console.log(items);
+			console.log(items[0]);
 			$scope.allS = items;
+			for(i=0;i<items.length;i++){
+				if(items[i][0] == localStorage.getItem('storageName')){
+					$scope.idex = i+1;
+				}
+			}
+			$scope.id = "Id" + $scope.idex;
 		});
 	};
 

@@ -58,12 +58,12 @@ var myApp = angular.module('ProjectApp', []);
                     verdict[2]=data[i][3];
                   }
               }
-              console.log('Verdict is =>'+verdict);
-              if(verdict[0]==1){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
+              console.log(oldScores);
+              if(verdict[0]=='1'){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
               else{document.getElementById("testCase1").src="redCross.png";score[0]=0.0;}
-              if(verdict[1]==1){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
+              if(verdict[1]=='1'){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
               else{document.getElementById("testCase2").src="redCross.png";score[1]=0.0;}
-              if(verdict[2]==1){document.getElementById("testCase3").src="greenTick.jpg";score[2]=33.3;}
+              if(verdict[2]=='1'){document.getElementById("testCase3").src="greenTick.jpg";score[2]=33.3;}
               else{document.getElementById("testCase3").src="redCross.png";score[2]=0.0;}
               totalScore = score[0] + score[1] + score[2];
               if(totalScore == 99.89999999999999){totalScore=100;}
@@ -71,15 +71,16 @@ var myApp = angular.module('ProjectApp', []);
               smoothScroll(document.getElementById('second'));
 
               ///////////////////// cheking score to send to api addScore to update score/////////////
-              if(verdict[0]+verdict[1]+verdict[2] > oldScores[1]+oldScores[2]+oldScores[3]){
-                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
+              if(Number(verdict[0])+Number(verdict[1])+Number(verdict[2]) > Number(oldScores[1])+Number(oldScores[2])+Number(oldScores[3])){
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
+                console.log(link);
                 $http.get(link)
                 .success(function(response){
                   
                 });
               }
-              if(oldScores[1]=='-'){
-               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str=000';
+              else if(oldScores[1]=='-'){
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
                 $http.get(link)
                 .success(function(response){
                   
@@ -99,8 +100,17 @@ var myApp = angular.module('ProjectApp', []);
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload";
-           fileUpload.uploadFileToUrl(file, uploadUrl);
-           $scope.messageNaive = localStorage.getItem('messageNaive');
+            if(file!=undefined){
+              var fileName = file.name;
+              var ext = fileName.split('.').pop();
+              if(ext == "c" || ext == "cpp"){
+                fileUpload.uploadFileToUrl(file, uploadUrl);
+                $scope.messageNaive='';
+              }else{$scope.messageNaive='You can only submit .c or .cpp files.'}
+            }
+            else{
+              $scope.messageNaive='Please upload a file to continue'; 
+            }
         };
 
 
@@ -109,9 +119,9 @@ var myApp = angular.module('ProjectApp', []);
           .success(function(response){
             oldScores = response;
             if(response[1]=='-'){document.getElementById('naive').src="na.png";$scope.score=0.0;}
-            else if(response[1]==0 && response[2]==0 & response[3]==0){document.getElementById('naive').src="redCross.png";$scope.score=0.0;}
-            else if(response[1]==1 && response[2]==1 & response[3]==1){document.getElementById('naive').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('naive').src="alert.png";if(response[1]+response[2]+response[3]==1){$scope.score=33.3}else{$scope.score=66.6}}
+            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('naive').src="redCross.png";$scope.score=0.0;}
+            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('naive').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('naive').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
         };

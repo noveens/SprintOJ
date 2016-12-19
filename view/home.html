@@ -26,6 +26,13 @@
     <!-- Custom Fonts -->
     <link href="./startbootstrap-sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <style type="text/css">
+    #inside:nth-child({{idex}}){
+            background-color: GreenYellow !important;
+            font-family: Arial;
+            font-weight: bold;
+        }
+    </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -439,12 +446,43 @@
                     </div>
 
                     <!-- /.col-lg-12 -->
+                    <div class="col-lg-8"><br>
+                        <div class="panel panel-success">
+
+                            <div class="panel-heading">
+                                <b>Top 10 in Leaderboard.</b>
+                            </div>
+
+                            <div class="panel-body">
+                                <table width="100%" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr class="odd gradeX">
+                                            <th>User #</th>
+                                            <th>Username</th>
+                                            <th>Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="inside" class="odd gradeX" ng-repeat="(x, score) in allS">
+                                            <td>{{x+1}}</td>
+                                            <td>{{score[0]}}</td>
+                                            <td>{{score[1]}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <b><div id="totalM"></div></b>
+                            </div>
+                         </div>
                 </div>
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
+
+
+
+
 
     </div>
     <!-- /#wrapper -->
