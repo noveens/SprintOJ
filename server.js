@@ -380,7 +380,6 @@ app.get('/addScore', function(request, response) {
 
 });
 
-
 app.get("/getScoreQues", function(request,response){
 	var qname = request.query.qname;
 	
@@ -389,47 +388,34 @@ app.get("/getScoreQues", function(request,response){
 			console.log('some error occured!');
 			response.send("error!");
 		}
-	var mydata = data.toString().split('\n');
-	console.log("leng is " + mydata.length);
-	var score = [];
-	for (var k = 0; k < mydata.length; k++) 
-	{
-				var it=-1;
-				var req="none";
-				var user = mydata[k].toString().split(',');
+
+		var mydata = data.toString().split('\n');
+		var score = {};
+		
+		for (var i = 0; i < mydata.length; i++) {
+			if(mydata[i]) {
+				var user = mydata[i].split(',');
 				var banda = user[0];
-			//	console.log("banda" + " " + banda);
-				for (var i = 0; i < user.length; i++) {
-					it = user[i].search(qname);
-					req = user[i];
-					if(it!=-1) {
-						//console.log(user[i]);
+
+				for (var j = 1; j < user.length; j++) {
+					var ques = user[j].split(":")[0];
+					var sco = user[j].split(":")[1];
+					
+					if(ques == qname) {
+						var c = 0;
+						for(var k=0;k<sco.length;k++) {
+							if(sco[k] == '1') {
+								c++;
+							}
+						}
+						var temp = (c/sco.length) * 100;
+						score[banda] = temp;
 						break;
 					}
 				}
-				if(req=="none") {
-					console.log('some error occured!');
-					response.send("error!");
-					continue;
-
-				}
-				//it2 = qname.length;
-				//console.log(it);
-			    var req2 = req.toString().split(':');
-
-				console.log(req2);
-				if(req2=='') break;
-				var corr = 0;
-				for (var i = 0; i < req2[1].length; i++) {
-					if(req2[1][i] == '1') corr++;
-				}
-
-				//console.log(corr);
-				score.push([banda],[corr]);
-				console.log("leng is " + mydata.length);
-				console.log("k is "+ k);
-			
+			}
 		}
+
 		console.log(score);	
 		response.send(score);
 	});
