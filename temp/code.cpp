@@ -26,6 +26,6 @@ int main()
   int x,y,p;
   scanf("%d%d",&x,&y);
   p = 1000000007;
-  printf("%u\n", power(x, y, p));
-  return 0;
+   printf("%u\n", power(x, y, p));
+   return 0;
 }
