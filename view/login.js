@@ -109,11 +109,12 @@ Logmain.controller('ProjectController', function($scope, $http){
 			}
 			else {
 				show="Become admin !";
-				var mydiv = document.getElementById("admin2");
-				var aTag = document.createElement('a');
-				//aTag.setAttribute('href',"uploadQuestion.html");
-				aTag.innerHTML = show;
-				mydiv.appendChild(aTag);
+				var mydiv3 = document.getElementById("admin2");
+				var aTag3 = document.createElement('a');
+				aTag3.setAttribute('href','#');
+				
+				aTag3.innerHTML = show;
+				mydiv3.appendChild(aTag3);
 			}
 		});
 
@@ -276,7 +277,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 	};
 
 	$scope.requested = function(){
-		console.log($scope.isadmin);
+		alert('Hurray');
 		if($scope.isadmin==1){
 			window.location="request.html";
 		}
