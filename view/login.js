@@ -6,6 +6,7 @@ var scoresAll;
 
 Logmain.controller('ProjectController', function($scope, $http){
 	
+	$scope.isadmin="";
 	$scope.display=[];
 	$scope.Answers=[];
 	var uname, pass, sign_name, sign_pass, sign_re_pass;
@@ -85,6 +86,24 @@ Logmain.controller('ProjectController', function($scope, $http){
 
 	$scope.getUserName = function(){
 		var userLoggedIn = localStorage.getItem("storageName");
+		var show="";
+
+		$http.get('/isAdmin?name='+userLoggedIn)
+		.success(function(response){
+			console.log(response);
+			$scope.isadmin=response;
+			if(response){
+				show="Admin requests !";
+				var mydiv = document.getElementById("uploadQuest");
+				var aTag = document.createElement('a');
+				aTag.setAttribute('href',"uploadQuestion.html");
+				aTag.innerHTML = "Upload Question";
+				mydiv.appendChild(aTag);
+			}
+			else show="Become admin !";
+			document.getElementById('admin').innerHTML=show;
+		});
+
 		$scope.usernameLoggedIn = userLoggedIn;
 		$scope.score=[0.0,0.0,0.0,0.0];
 		
@@ -99,8 +118,6 @@ Logmain.controller('ProjectController', function($scope, $http){
 					
 					if (response.hasOwnProperty(i)) {
 						$scope.display.push({'ques':i,'id':x});
-
-				
 						x+=1;
 					}
 				}
@@ -231,21 +248,35 @@ Logmain.controller('ProjectController', function($scope, $http){
 
 	};
 
-	
+
+
 	$scope.goTo = function(name){
 			console.log(name);
             var link='questions/'+name+'/'+name+'.html';
             //alert(link);
             window.open(link);
         
-	}
+	};
 
 	$scope.getId = function(){
 		console.log(document.getElementById('assignId'));
-	}
+	};
 
-	$scope.call = function(){
-		alert('Hi');
-	}
+	$scope.requested = function(){
+		console.log($scope.isadmin);
+		if($scope.isadmin==1){
+			window.location="request.html";
+		}
+		else{
+			$http.get('/requestAdmin?name='+localStorage.getItem("storageName"))
+			.success(function(response){
+				if(response==1){$scope.tell="Successfull request!";}
+				else if(response==-1){$scope.tell="Already request was made!";}
+				else if(response==0){$scope.tell="Unsuccessfull request!";}
+			});
+		}
+	};
+
+
 
 });
