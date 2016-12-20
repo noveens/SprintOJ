@@ -143,7 +143,7 @@ app.post("/upload", function(request, response) {
     if(lang == "C") extension = ".c";
     if(lang == "Python") extension = ".py";
 
-    console.log("shhfs");
+    //console.log("shhfs");
     console.log(extension);
     sampleFile.mv('./temp/code'+ extension, function(err) {
         if (err) {
