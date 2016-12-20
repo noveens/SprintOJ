@@ -131,8 +131,6 @@ app.post("/upload", function(request, response) {
 	var sampleFile;
 	var lang = request.query.lang;
 	var extension  = ".cpp";
-	
-
 
     if (!request.files) {
         response.send('No files were uploaded.');
@@ -160,6 +158,8 @@ app.post("/upload", function(request, response) {
             for(var i=1;i<=3;i++) {
 				exec("bash ./bash/script.sh " + name + " " + i + " " +extension, function puts(error, stdout, stderr) { 
 					if(stdout[2] == "0") {
+
+						console.log(stdout[0]);
 						var tt = {};
 						tt[stdout[0]] = 1;
 						send.push(tt);
