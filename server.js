@@ -392,11 +392,11 @@ app.get("/getScoreQues", function(request,response){
 	var mydata = data.toString().split('\n');
 	console.log("leng is " + mydata.length);
 	var score = [];
-	for (var i = 0; i < mydata.length; i++) {
-				var user;
+	for (var k = 0; k < mydata.length; k++) 
+	{
 				var it=-1;
 				var req="none";
-				var user = mydata[i].toString().split(',');
+				var user = mydata[k].toString().split(',');
 				var banda = user[0];
 			//	console.log("banda" + " " + banda);
 				for (var i = 0; i < user.length; i++) {
@@ -416,7 +416,9 @@ app.get("/getScoreQues", function(request,response){
 				//it2 = qname.length;
 				//console.log(it);
 			    var req2 = req.toString().split(':');
-				//console.log(req2);
+
+				console.log(req2);
+				if(req2=='') break;
 				var corr = 0;
 				for (var i = 0; i < req2[1].length; i++) {
 					if(req2[1][i] == '1') corr++;
@@ -424,11 +426,12 @@ app.get("/getScoreQues", function(request,response){
 
 				//console.log(corr);
 				score.push([banda],[corr]);
-				console.log("i is "+i);
 				console.log("leng is " + mydata.length);
+				console.log("k is "+ k);
 			
 		}
 		console.log(score);	
+		response.send(score);
 	});
 
 });
