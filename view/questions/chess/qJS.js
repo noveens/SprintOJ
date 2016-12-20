@@ -203,7 +203,7 @@ var myApp = angular.module('ProjectApp', []);
             if(file!=undefined){
               var fileName = file.name;
               var ext = fileName.split('.').pop();
-              if(ext == "c" || ext == "cpp"){
+              if(ext == "c" || ext == "cpp" || ext == "py" || ext == "java"){
                 fileUpload.uploadFileToUrl(file, uploadUrl);
                 $scope.messageAston='';
               }else{$scope.messageAston='You can only submit .c or .cpp files.'}

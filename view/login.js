@@ -236,7 +236,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 			console.log(name);
             var link='questions/'+name+'/'+name+'.html';
             //alert(link);
-            window.location=link;
+            window.open(link);
         
 	}
 
