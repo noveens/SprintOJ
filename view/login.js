@@ -112,7 +112,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 				var mydiv3 = document.getElementById("admin2");
 				var aTag3 = document.createElement('a');
 				aTag3.setAttribute('href','#');
-				
+
 				aTag3.innerHTML = show;
 				mydiv3.appendChild(aTag3);
 			}
@@ -277,7 +277,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 	};
 
 	$scope.requested = function(){
-		alert('Hurray');
+		
 		if($scope.isadmin==1){
 			window.location="request.html";
 		}
