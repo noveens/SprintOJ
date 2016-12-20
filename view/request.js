@@ -17,6 +17,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 		$http.get('/makeAdmin?name='+name)
 		.success(function(response){
 			console.log(response);
+			window.location.reload();
 		});
 	}
 
@@ -25,6 +26,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 		$http.get('/removeAdminRequest?name='+name)
 		.success(function(response){
 			console.log(response);
+			window.location.reload();
 		});
 	}
 
