@@ -118,7 +118,7 @@ var myApp = angular.module('ProjectApp', []);
            var fd = new FormData();
            fd.append('code', file);
  		   
- 		   fd.append('name','Bachgold');
+ 		   fd.append('name','crete');
 
 
            $http.post(uploadUrl, fd, {
@@ -130,11 +130,12 @@ var myApp = angular.module('ProjectApp', []);
 
             console.log(data);
             if(data == "No files were uploaded."){
-              localStorage.setItem("messageBachgold",'Please upload a file to continue');
+              localStorage.setItem("messageCrete",'Please upload a file to continue');
 
             }
             else{
-              localStorage.setItem("messageBachgold",'');
+              localStorage.setItem("messageCrete",'');
+              console.log(data)
            		for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
@@ -175,7 +176,7 @@ var myApp = angular.module('ProjectApp', []);
               
               
               if(Number((s.match(/1/g) || []).length) > Number((o.match(/1/g) || []).length)){
-                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=crete&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
@@ -183,7 +184,7 @@ var myApp = angular.module('ProjectApp', []);
               }
 
               else if(oldScores[1]=='-'){
-               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=crete&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
@@ -204,32 +205,31 @@ var myApp = angular.module('ProjectApp', []);
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload?lang="+$scope.language;
-           
             if(file!=undefined){
               var fileName = file.name;
               var ext = fileName.split('.').pop();
               if(ext == "c" || ext == "cpp"){
                 fileUpload.uploadFileToUrl(file, uploadUrl);
-                $scope.messageBachgold='';
-              }else{$scope.messageBachgold='You can only submit .c or .cpp files.'}
+                $scope.messageCrete='';
+              }else{$scope.messageCrete='You can only submit .c or .cpp files.'}
             }
             else{
-              $scope.messageBachgold='Please upload a file to continue'; 
+              $scope.messageCrete='Please upload a file to continue'; 
             }
         };
 
 
          $scope.getStatus = function(){
           var userLoggedIn = localStorage.getItem("storageName");
-          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=Bachgold')
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=crete')
           .success(function(response){
             console.log(response);
             console.log(localStorage.getItem("storageName"))
             oldScores = response;
-            if(response[1]=='-'){document.getElementById('Bachgold').src="na.png";$scope.score=0.0;}
-            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('Bachgold').src="redCross.png";$scope.score=0.0;}
-            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('Bachgold').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('Bachgold').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
+            if(response[1]=='-'){document.getElementById('crete').src="na.png";$scope.score=0.0;}
+            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('crete').src="redCross.png";$scope.score=0.0;}
+            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('crete').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('crete').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
         };
@@ -244,13 +244,14 @@ var myApp = angular.module('ProjectApp', []);
           $scope.language = "C++";
         };
 
-        $scope.ProgJava = function(){
+         $scope.ProgJava = function(){
           $scope.language = "Java";
         };
 
         $scope.ProgPy = function(){
           $scope.language = "Python";
         };
+
 
 
      }]);

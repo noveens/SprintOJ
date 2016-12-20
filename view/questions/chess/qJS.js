@@ -84,16 +84,14 @@ myApp.controller('ProjectController', ['$scope', '$http' ,'fileUpload', function
 	};
 }]*///);*/
 //*/
+var score = [0.0,0.0,0.0];
 
-var verdict = [0,0,0];
-
-var score = [0.0 ,0.0,0.0];
+var totalScore = 0;
 
 var Upload=0;
 
 var oldScores;
-
-var totalScore = 0;
+var verdict = [0,0,0];
 
 var myApp = angular.module('ProjectApp', []);
  
@@ -118,7 +116,7 @@ var myApp = angular.module('ProjectApp', []);
            var fd = new FormData();
            fd.append('code', file);
  		   
- 		   fd.append('name','Bachgold');
+ 		   fd.append('name','chess');
 
 
            $http.post(uploadUrl, fd, {
@@ -127,15 +125,13 @@ var myApp = angular.module('ProjectApp', []);
            })
  
            .success(function(data){
-
-            console.log(data);
             if(data == "No files were uploaded."){
-              localStorage.setItem("messageBachgold",'Please upload a file to continue');
-
+               localStorage.setItem("messageAston",'Please upload a file to continue');
             }
             else{
-              localStorage.setItem("messageBachgold",'');
-           		for(i=0;i<data.length;i++){
+              localStorage.setItem("messageAston",'');
+           		//console.log(data);
+              for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
                     verdict[0]=data[i][1];
@@ -147,7 +143,7 @@ var myApp = angular.module('ProjectApp', []);
                     verdict[2]=data[i][3];
                   }
               }
-              console.log(verdict);
+              console.log(oldScores);
               var s='',o='';
               for(i=0;i<3;i++){
                 var idL="testCase"+Number(i+1);
@@ -189,17 +185,16 @@ var myApp = angular.module('ProjectApp', []);
                   
                 }); 
               }
- 
+              
 ////////////////////////////////////////////////////////////////////////////////////////
            }})
- 
  
            .error(function(){
            });
         }
      }]);
  
-     myApp.controller('ProjectController', ['$scope', '$http','fileUpload', function($scope, $http,fileUpload){
+     myApp.controller('ProjectController', ['$scope', '$http', 'fileUpload', function($scope, $http,fileUpload){
       $scope.language="";
         $scope.uploadFile = function(){
            var file = $scope.myFile;
@@ -210,31 +205,27 @@ var myApp = angular.module('ProjectApp', []);
               var ext = fileName.split('.').pop();
               if(ext == "c" || ext == "cpp"){
                 fileUpload.uploadFileToUrl(file, uploadUrl);
-                $scope.messageBachgold='';
-              }else{$scope.messageBachgold='You can only submit .c or .cpp files.'}
+                $scope.messageAston='';
+              }else{$scope.messageAston='You can only submit .c or .cpp files.'}
             }
             else{
-              $scope.messageBachgold='Please upload a file to continue'; 
+              $scope.messageAston='Please upload a file to continue'; 
             }
-        };
+          };
 
-
-         $scope.getStatus = function(){
-          var userLoggedIn = localStorage.getItem("storageName");
-          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=Bachgold')
+        $scope.getStatus = function(){
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=chess')
           .success(function(response){
-            console.log(response);
-            console.log(localStorage.getItem("storageName"))
             oldScores = response;
-            if(response[1]=='-'){document.getElementById('Bachgold').src="na.png";$scope.score=0.0;}
-            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('Bachgold').src="redCross.png";$scope.score=0.0;}
-            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('Bachgold').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('Bachgold').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
+            console.log(localStorage.getItem("storageName"));
+            if(response[1]=='-'){document.getElementById('aston').src="na.png";$scope.score=0.0;}
+            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('aston').src="redCross.png";$scope.score=0.0;}
+            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('aston').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('aston').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
         };
         $scope.getStatus();
-
 
         $scope.ProgC = function(){
           $scope.language = "C";
@@ -244,7 +235,7 @@ var myApp = angular.module('ProjectApp', []);
           $scope.language = "C++";
         };
 
-        $scope.ProgJava = function(){
+         $scope.ProgJava = function(){
           $scope.language = "Java";
         };
 
@@ -256,7 +247,8 @@ var myApp = angular.module('ProjectApp', []);
      }]);
 
 
-     window.smoothScroll = function(target) {
+
+    window.smoothScroll = function(target) {
             $('#second').show();
             var scrollContainer = target;
             do { //find scroll container
@@ -278,4 +270,5 @@ var myApp = angular.module('ProjectApp', []);
             }
             // start scrolling
             scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+            
         }

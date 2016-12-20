@@ -1,9 +1,13 @@
 var Logmain=angular.module('ProjectApp',[]);
 
+
+
 var scoresAll;
 
 Logmain.controller('ProjectController', function($scope, $http){
 	
+	$scope.display=[];
+	$scope.Answers=[];
 	var uname, pass, sign_name, sign_pass, sign_re_pass;
 	$scope.message = "";
 	$scope.Username = "";
@@ -83,14 +87,38 @@ Logmain.controller('ProjectController', function($scope, $http){
 		var userLoggedIn = localStorage.getItem("storageName");
 		$scope.usernameLoggedIn = userLoggedIn;
 		$scope.score=[0.0,0.0,0.0,0.0];
+		
 		$http.get('/getScore?name='+userLoggedIn)
 		.success(function(response){
 			$scope.Answers = response;
 			console.log(response);
 			if(response!=0){
 				
+				var x=0;
+				for(i in response){
 					
-				if(response["naive"][1]=='-'){document.getElementById('naive').src="na.png";}	
+					if (response.hasOwnProperty(i)) {
+						$scope.display.push({'ques':i,'id':x});
+
+				
+						x+=1;
+					}
+				}
+
+						
+
+				console.log($scope.display);
+				
+				for(i=0;i<response.length;i++){
+					//console.log(response[i]);
+/*					if(response["naive"][1]=='-'){document.getElementById('naive').src="na.png";}	
+					else if(response["naive"][1]=='0' && response["naive"][2]=='0' && response["naive"][3]=='0'){document.getElementById('naive').src="redCross.png";$scope.score[0]=0.0;}
+					else if(response["naive"][1]=='1' && response["naive"][2]=='1' && response["naive"][3]=='1'){document.getElementById('naive').src="greenTick.jpg";$scope.score[0]=100;}
+					else{document.getElementById('naive').src="alert.png";if(Number(response['naive'][1])+Number(response['naive'][2])+Number(response['naive'][3])==1){$scope.score[0]=33.3}else{$scope.score[0]=66.6;}}
+*/
+
+				}	
+				/*if(response["naive"][1]=='-'){document.getElementById('naive').src="na.png";}	
 				else if(response["naive"][1]=='0' && response["naive"][2]=='0' && response["naive"][3]=='0'){document.getElementById('naive').src="redCross.png";$scope.score[0]=0.0;}
 				else if(response["naive"][1]=='1' && response["naive"][2]=='1' && response["naive"][3]=='1'){document.getElementById('naive').src="greenTick.jpg";$scope.score[0]=100;}
 				else{document.getElementById('naive').src="alert.png";if(Number(response['naive'][1])+Number(response['naive'][2])+Number(response['naive'][3])==1){$scope.score[0]=33.3}else{$scope.score[0]=66.6;}}
@@ -108,7 +136,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 				if(response["grasshopper"][1]=='-'){document.getElementById('ostap').src="na.png";}
 				else if(response["grasshopper"][1]==0 && response["grasshopper"][2]==0 && response["grasshopper"][3]==0){document.getElementById('ostap').src="redCross.png";$scope.score[3]=0.0;}
 				else if(response["grasshopper"][1]==1 && response["grasshopper"][2]==1 && response["grasshopper"][3]==1){document.getElementById('ostap').src="greenTick.jpg";$scope.score[3]=100;}
-				else{document.getElementById('ostap').src="alert.png";if(Number(response['ostap'][1])+Number(response['ostap'][2])+Number(response['ostap'][3])==1){$scope.score[3]=33.3}else{$scope.score[3]=66.6;}}
+				else{document.getElementById('ostap').src="alert.png";if(Number(response['ostap'][1])+Number(response['ostap'][2])+Number(response['ostap'][3])==1){$scope.score[3]=33.3}else{$scope.score[3]=66.6;}}*/
 			
 			}
 			else{
@@ -133,6 +161,8 @@ Logmain.controller('ProjectController', function($scope, $http){
 			var dict = response;
 			var items = Object.keys(dict).map(function(key) {
    				 return [key, dict[key]];
+
+
 			});
 
 
@@ -148,6 +178,16 @@ Logmain.controller('ProjectController', function($scope, $http){
 				}
 			}
 			$scope.id = "Id" + $scope.idex;
+
+
+			for(i in $scope.Answers){
+					console.log(i);
+					if($scope.Answers[i][1]=='-'){document.getElementById(i).src="na.png";}	
+					else if($scope.Answers[i][1]=='0' && $scope.Answers[i][2]=='0' && $scope.Answers[i][3]=='0'){document.getElementById(i).src="redCross.png";$scope.score[0]=0.0;}
+					else if($scope.Answers[i][1]=='1' && $scope.Answers[i][2]=='1' && $scope.Answers[i][3]=='1'){document.getElementById(i).src="greenTick.jpg";$scope.score[0]=100;}
+					else{document.getElementById(i).src="alert.png";if(Number($scope.Answers[i][1])+Number($scope.Answers[i][2])+Number($scope.Answers[i][3])==1){$scope.score[0]=33.3}else{$scope.score[0]=66.6;}}
+
+			}		
 		});
 	};
 
@@ -186,9 +226,26 @@ Logmain.controller('ProjectController', function($scope, $http){
 			//alert(link);
 		});
 
-
+		$scope.createdMess="Question was successfully created!";
 		console.log(qbody);
 
 	};
+
+	
+	$scope.goTo = function(name){
+			console.log(name);
+            var link='questions/'+name+'/'+name+'.html';
+            //alert(link);
+            window.location=link;
+        
+	}
+
+	$scope.getId = function(){
+		console.log(document.getElementById('assignId'));
+	}
+
+	$scope.call = function(){
+		alert('Hi');
+	}
 
 });

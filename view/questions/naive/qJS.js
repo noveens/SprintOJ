@@ -58,29 +58,42 @@ var myApp = angular.module('ProjectApp', []);
                     verdict[2]=data[i][3];
                   }
               }
-              console.log(oldScores);
-              if(verdict[0]=='1'){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
+              var s='',o='';
+              for(i=0;i<3;i++){
+                var idL="testCase"+Number(i+1);
+                console.log(idL);
+                if(verdict[i]=='1'){document.getElementById("testCase"+Number(i+1)).src="greenTick.jpg";score[i]=33.3;}
+                else{document.getElementById("testCase"+Number(i+1)).src="redCross.png";score[i]=0.0;}
+                document.getElementById('score'+Number(i+1)).innerHTML=score[i];
+                totalScore+=score[i];
+                s+=verdict[i];
+                o+=oldScores[i];
+              }
+
+              /*if(verdict[0]=='1'){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
               else{document.getElementById("testCase1").src="redCross.png";score[0]=0.0;}
               if(verdict[1]=='1'){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
               else{document.getElementById("testCase2").src="redCross.png";score[1]=0.0;}
               if(verdict[2]=='1'){document.getElementById("testCase3").src="greenTick.jpg";score[2]=33.3;}
-              else{document.getElementById("testCase3").src="redCross.png";score[2]=0.0;}
-              totalScore = score[0] + score[1] + score[2];
+              else{document.getElementById("testCase3").src="redCross.png";score[2]=0.0;}*/
+              /*totalScore = score[0] + score[1] + score[2];*/
               if(totalScore == 99.89999999999999){totalScore=100;}
-              document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;
+              /*document.getElementById('score1').innerHTML=score[0];document.getElementById('score2').innerHTML=score[1];document.getElementById('score3').innerHTML=score[2];document.getElementById('totalM').innerHTML='Your total score is : ' + totalScore;*/
               smoothScroll(document.getElementById('second'));
 
-              ///////////////////// cheking score to send to api addScore to update score/////////////
-              if(Number(verdict[0])+Number(verdict[1])+Number(verdict[2]) > Number(oldScores[1])+Number(oldScores[2])+Number(oldScores[3])){
-                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
-                console.log(link);
+///////////////////// cheking score to send to api addScore to update score/////////////
+              
+              
+              if(Number((s.match(/1/g) || []).length) > Number((o.match(/1/g) || []).length)){
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
                 });
               }
+
               else if(oldScores[1]=='-'){
-               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str='+verdict[0].toString()+verdict[1].toString()+verdict[2].toString();
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
@@ -97,9 +110,10 @@ var myApp = angular.module('ProjectApp', []);
      }]);
  
      myApp.controller('ProjectController', ['$scope', '$http','fileUpload', function($scope, $http,fileUpload){
+      $scope.language="";
         $scope.uploadFile = function(){
            var file = $scope.myFile;
-           var uploadUrl = "/upload";
+           var uploadUrl = "/upload?lang="+$scope.language;
             if(file!=undefined){
               var fileName = file.name;
               var ext = fileName.split('.').pop();
@@ -135,6 +149,15 @@ var myApp = angular.module('ProjectApp', []);
         $scope.ProgCpp = function(){
           $scope.language = "C++";
         };
+
+         $scope.ProgJava = function(){
+          $scope.language = "Java";
+        };
+
+        $scope.ProgPy = function(){
+          $scope.language = "Python";
+        };
+
 
 
      }]);

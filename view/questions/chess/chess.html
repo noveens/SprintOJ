@@ -20,6 +20,9 @@
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        
+    </script>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../startbootstrap-sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -395,29 +398,36 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1 class="page-header">A. Arpa’s hard exam and Mehrdad’s naive cheat
-                        <img src="" id="naive" width="30" height="30" /></h1>
+                        <h1 class="page-header">A. Anton and Danik
+                        <img src="" id="aston" width="30" height="30"></h1>
                         <div>
                             <b>time limit per test : 1 second</b><br> 
                             <b>memory limit per test : 256 megabytes</b><br><br>
                             <b>Your best score: {{score}}</b>
-                            <br><br>
-                        </div>
-                        <div>
-                            There exists an island called Arpa’s land, some beautiful girls live there, as ugly ones do.
-
-Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Exam has only one question, given n, print the last digit of 1378n. 
-                        </div>
-                        <br>
-                        <div>
-                            Mehrdad has become quite confused and wants you to help him. Please help, although it's a naive cheat.
                         </div>
                         <br><br>
                         <div>
-                            <b>Input</b><br>
-                            The single line of input contains one integer n (0  ≤  n  ≤  109).<br><br>
-                            <b>Output</b><br>
-                            Print single integer — the last digit of 1378n.
+                           Anton likes to play chess, and so does his friend Danik.
+                        </div>
+                        <br>
+                        <div>
+                            Once they have played n games in a row. For each game it's known who was the winner — Anton or Danik. None of the games ended with a tie.
+                        </div>
+                        <br>
+                        <div>
+                            Now Anton wonders, who won more games, he or Danik? Help him determine this.
+                        </div>
+                        <br><br>
+                        <div>
+                            <b>Input</b><br><br>
+                            <div>The first line of the input contains a single integer n (1 ≤ n ≤ 100 000) — the number of games played.</div>
+                            <div>The second line contains a string s, consisting of n uppercase English letters 'A' and 'D' — the outcome of each of the games. The i-th character of the string is equal to 'A' if the Anton won the i-th game and 'D' if Danik won the i-th game.
+                            </div>
+                            <br>
+                            <b>Output</b><br><br>
+                            <div>If Anton won more games than Danik, print "Anton" (without quotes) in the only line of the output.</div>
+                            <div>If Danik won more games than Anton, print "Danik" (without quotes) in the only line of the output.</div>
+                            <div>If Anton and Danik won the same number of games, print "Friendship" (without quotes).</div>
                         </div>
                         <br>
                         <div><b>Examples</b><br><br></div>
@@ -427,29 +437,42 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                     <div class="panel-heading">
                                             <b>Input</b>
                                     </div>
-                                    <div class="panel-body">1</div>
+                                    <div class="panel-body">6<br>ADAAAA</div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <b>Output</b>
                                 </div>
-                                <div class="panel-body">8</div>
+                                <div class="panel-body">Anton</div>
                             </div>
                             <div class="panel panel-default">
                                     <div class="panel-heading">
                                             <b>Input</b>
                                     </div>
-                                    <div class="panel-body">2</div>
+                                    <div class="panel-body">7<br>DDDAADA</div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <b>Output</b>
                                 </div>
-                                <div class="panel-body">4</div>
+                                <div class="panel-body">Danik</div>
+                            </div>
+                            <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                            <b>Input</b>
+                                    </div>
+                                    <div class="panel-body">6<br>DADADA</div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <b>Output</b>
+                                </div>
+                                <div class="panel-body">Friendship</div>
                             </div>
                         </div>
                         
                     </div>
+                    <!-- /.col-lg-12 -->
                     <div class="col-lg-4">
                     <h1></h1>
                         <div class="panel panel-default">
@@ -483,11 +506,11 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                             </li>
                                             <li><a ng-click="ProgCpp()">C++</a>
                                             </li>
+                                            <li class="divider"></li>
                                             <li><a ng-click="ProgPy()">Python</a>
                                             </li>
                                             <li><a ng-click="ProgJava()">Java</a>
                                             </li>
-                                            <li class="divider"></li>
                                         </ul>
                                         {{language}}
                                         <!-- /.dropdown-user -->
@@ -499,7 +522,7 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <button ng-click = "uploadFile()" >Upload File</button>
-                                        <br><br><b>{{messageNaive}}</b>
+                                        <br><br><b>{{messageAston}}</b>
                                     </a>
                                     <a class="list-group-item">
                                     <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score. </em>
@@ -510,20 +533,19 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                             <!-- /.panel-body -->
                         </div>
                     </div>
-                    <!-- /.col-lg-12 -->
+                    
                 </div>
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
+
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
-
     <div  class="second" id="second" >
-        <div id="wrapper"><h1></h1>
+        <div id="wrapper">
             <div id="page-wrapper">
                 <div id="container-fluid">
                     <div id="row">
@@ -546,19 +568,19 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                     </thead>
                                     <tbody>
                                         <tr class="odd gradeX" id="testCase1Row">
-                                            <td >1</td>
+                                            <td>1</td>
                                             <td><img src="" width="20" height="20" id="testCase1"></td>
-                                            <td id="score1">Score</td>
+                                            <td id="score1"></td>
                                         </tr>
                                         <tr class="odd gradeX" id="testCase2Row">
                                                 <td>2</td>
                                                 <td><img id="testCase2" src="" width="20" height="20"></td>
-                                                <td id="score2">Score</td>
+                                                <td id="score2"></td>
                                         </tr>
                                         <tr class="odd gradeX" id="testCase3Row">
                                             <td>3</td>
                                             <td><img id="testCase3" src="" width="20" height="20"></td>
-                                            <td id="score3">Score</td>
+                                            <td id="score3"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -569,8 +591,6 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
             </div>
         </div>
     </div>
-
-    
 
     <!-- jQuery -->
     <script src="../../startbootstrap-sb-admin-2/vendor/jquery/jquery.min.js"></script>

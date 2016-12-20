@@ -84,16 +84,15 @@ myApp.controller('ProjectController', ['$scope', '$http' ,'fileUpload', function
 	};
 }]*///);*/
 //*/
-
 var verdict = [0,0,0];
 
-var score = [0.0 ,0.0,0.0];
+var score = [0.0,0.0,0.0];
 
-var Upload=0;
+var totalScore = 0;
 
 var oldScores;
 
-var totalScore = 0;
+var Upload=0;
 
 var myApp = angular.module('ProjectApp', []);
  
@@ -114,11 +113,12 @@ var myApp = angular.module('ProjectApp', []);
      }]);
  
      myApp.service('fileUpload', ['$http', function ($http) {
+      
         this.uploadFileToUrl = function(file, uploadUrl){
            var fd = new FormData();
            fd.append('code', file);
  		   
- 		   fd.append('name','Bachgold');
+ 		   fd.append('name','grasshopper');
 
 
            $http.post(uploadUrl, fd, {
@@ -128,13 +128,13 @@ var myApp = angular.module('ProjectApp', []);
  
            .success(function(data){
 
-            console.log(data);
             if(data == "No files were uploaded."){
-              localStorage.setItem("messageBachgold",'Please upload a file to continue');
-
+              
+              localStorage.setItem("messageOstap",'Please upload a file to continue');
+              
             }
             else{
-              localStorage.setItem("messageBachgold",'');
+               localStorage.setItem("messageOstap",'');
            		for(i=0;i<data.length;i++){
                   
                   if(data[i][1] != undefined){
@@ -147,7 +147,7 @@ var myApp = angular.module('ProjectApp', []);
                     verdict[2]=data[i][3];
                   }
               }
-              console.log(verdict);
+              console.log('Verdict is =>'+verdict);
               var s='',o='';
               for(i=0;i<3;i++){
                 var idL="testCase"+Number(i+1);
@@ -191,11 +191,16 @@ var myApp = angular.module('ProjectApp', []);
               }
  
 ////////////////////////////////////////////////////////////////////////////////////////
+
            }})
  
- 
+
+         
            .error(function(){
            });
+
+
+
         }
      }]);
  
@@ -204,34 +209,32 @@ var myApp = angular.module('ProjectApp', []);
         $scope.uploadFile = function(){
            var file = $scope.myFile;
            var uploadUrl = "/upload?lang="+$scope.language;
-           
             if(file!=undefined){
               var fileName = file.name;
               var ext = fileName.split('.').pop();
               if(ext == "c" || ext == "cpp"){
                 fileUpload.uploadFileToUrl(file, uploadUrl);
-                $scope.messageBachgold='';
-              }else{$scope.messageBachgold='You can only submit .c or .cpp files.'}
+                $scope.messageOstap='';
+              }else{$scope.messageOstap='You can only submit .c or .cpp files.'}
             }
             else{
-              $scope.messageBachgold='Please upload a file to continue'; 
+              $scope.messageOstap='Please upload a file to continue'; 
             }
+           
         };
 
-
          $scope.getStatus = function(){
-          var userLoggedIn = localStorage.getItem("storageName");
-          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=Bachgold')
+
+          $http.get('/getScore?name='+localStorage.getItem("storageName")+'&ques=grasshopper')
           .success(function(response){
-            console.log(response);
-            console.log(localStorage.getItem("storageName"))
             oldScores = response;
-            if(response[1]=='-'){document.getElementById('Bachgold').src="na.png";$scope.score=0.0;}
-            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('Bachgold').src="redCross.png";$scope.score=0.0;}
-            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('Bachgold').src="greenTick.jpg";$scope.score=100;}
-            else{document.getElementById('Bachgold').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
+            if(response[1]=='-'){document.getElementById('ostap').src="na.png";$scope.score=0.0;}
+            else if(response[1]=='0' && response[2]=='0' & response[3]=='0'){document.getElementById('ostap').src="redCross.png";$scope.score=0.0;}
+            else if(response[1]=='1' && response[2]=='1' & response[3]=='1'){document.getElementById('ostap').src="greenTick.jpg";$scope.score=100;}
+            else{document.getElementById('ostap').src="alert.png";if(Number(response[1])+Number(response[2])+Number(response[3])==1){$scope.score=33.3}else{$scope.score=66.6}}
           })
           ;
+
         };
         $scope.getStatus();
 
@@ -253,8 +256,8 @@ var myApp = angular.module('ProjectApp', []);
         };
 
 
-     }]);
 
+     }]);
 
      window.smoothScroll = function(target) {
             $('#second').show();

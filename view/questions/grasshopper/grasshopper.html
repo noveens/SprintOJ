@@ -35,6 +35,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 
+
     <script type="text/javascript" src="qJS.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -395,29 +396,34 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1 class="page-header">A. Arpa’s hard exam and Mehrdad’s naive cheat
-                        <img src="" id="naive" width="30" height="30" /></h1>
-                        <div>
-                            <b>time limit per test : 1 second</b><br> 
+                        <h1 class="page-header">A. Ostap and Grasshopper
+                        <img src="" id="ostap" width="30" height="30"></h1>
+                        <div> 
+                            <b>time limit per test : 2 seconds</b><br>
                             <b>memory limit per test : 256 megabytes</b><br><br>
                             <b>Your best score: {{score}}</b>
-                            <br><br>
-                        </div>
-                        <div>
-                            There exists an island called Arpa’s land, some beautiful girls live there, as ugly ones do.
-
-Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Exam has only one question, given n, print the last digit of 1378n. 
-                        </div>
-                        <br>
-                        <div>
-                            Mehrdad has become quite confused and wants you to help him. Please help, although it's a naive cheat.
                         </div>
                         <br><br>
                         <div>
-                            <b>Input</b><br>
-                            The single line of input contains one integer n (0  ≤  n  ≤  109).<br><br>
-                            <b>Output</b><br>
-                            Print single integer — the last digit of 1378n.
+                            On the way to Rio de Janeiro Ostap kills time playing with a grasshopper he took with him in a special box. Ostap builds a line of length n such that some cells of this line are empty and some contain obstacles. Then, he places his grasshopper to one of the empty cells and a small insect in another empty cell. The grasshopper wants to eat the insect. 
+                        </div>
+                        <br>
+                        <div>
+                            Ostap knows that grasshopper is able to jump to any empty cell that is exactly k cells away from the current (to the left or to the right). Note that it doesn't matter whether intermediate cells are empty or not as the grasshopper makes a jump over them. For example, if k = 1 the grasshopper can jump to a neighboring cell only, and if k = 2 the grasshopper can jump over a single cell.
+                        </div>
+                        <br>
+                        <div>
+                            Your goal is to determine whether there is a sequence of jumps such that grasshopper will get from his initial position to the cell with an insect.
+                        </div>
+                        <br><br>
+                        <div>
+                            <b>Input</b><br><br>
+                            <div>The first line of the input contains two integers n and k (2 ≤ n ≤ 100, 1 ≤ k ≤ n - 1) — the number of cells in the line and the length of one grasshopper's jump.</div>
+                            <div>The second line contains a string of length n consisting of characters '.', '#', 'G' and 'T'. Character '.' means that the corresponding cell is empty, character '#' means that the corresponding cell contains an obstacle and grasshopper can't jump there. Character 'G' means that the grasshopper starts at this position and, finally, 'T' means that the target insect is located at this cell. It's guaranteed that characters 'G' and 'T' appear in this line <b>exactly once.</b>
+                            </div>
+                            <br>
+                            <b>Output</b><br><br>
+                            If there exists a sequence of jumps (each jump of length k), such that the grasshopper can get from his initial position to the cell with the insect, print "YES" (without quotes) in the only line of the input. Otherwise, print "NO" (without quotes).
                         </div>
                         <br>
                         <div><b>Examples</b><br><br></div>
@@ -427,29 +433,30 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                     <div class="panel-heading">
                                             <b>Input</b>
                                     </div>
-                                    <div class="panel-body">1</div>
+                                    <div class="panel-body">5 2<br>#G#T#</div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <b>Output</b>
                                 </div>
-                                <div class="panel-body">8</div>
+                                <div class="panel-body">YES</div>
                             </div>
                             <div class="panel panel-default">
                                     <div class="panel-heading">
                                             <b>Input</b>
                                     </div>
-                                    <div class="panel-body">2</div>
+                                    <div class="panel-body">6 1<br>T....G</div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <b>Output</b>
                                 </div>
-                                <div class="panel-body">4</div>
+                                <div class="panel-body">YES</div>
                             </div>
                         </div>
                         
                     </div>
+                    <!-- /.col-lg-12 -->
                     <div class="col-lg-4">
                     <h1></h1>
                         <div class="panel panel-default">
@@ -498,11 +505,11 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                         
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <button ng-click = "uploadFile()" >Upload File</button>
-                                        <br><br><b>{{messageNaive}}</b>
+                                        <button ng-click = "uploadFile()">Upload File</button>
+                                        <br><br><b>{{messageOstap}}</b>
                                     </a>
                                     <a class="list-group-item">
-                                    <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score. </em>
+                                    <em><b>Tip</b> : You can submit <b>any</b> number of times you want. Your best submission is considered for computing total score.</em>
                                     </a>
                                 </div>
                                 <!-- /.list-group -->
@@ -510,7 +517,6 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                             <!-- /.panel-body -->
                         </div>
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
             </div>
@@ -520,14 +526,12 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
 
     </div>
     <!-- /#wrapper -->
-
-
     <div  class="second" id="second" >
-        <div id="wrapper"><h1></h1>
+        <div id="wrapper">
             <div id="page-wrapper">
                 <div id="container-fluid">
                     <div id="row">
-                        
+                        <h1></h1>
                         <div class="col-lg-8"><br>
                         <div class="panel panel-default">
 
@@ -546,19 +550,19 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
                                     </thead>
                                     <tbody>
                                         <tr class="odd gradeX" id="testCase1Row">
-                                            <td >1</td>
+                                            <td>1</td>
                                             <td><img src="" width="20" height="20" id="testCase1"></td>
-                                            <td id="score1">Score</td>
+                                            <td id="score1"></td>
                                         </tr>
                                         <tr class="odd gradeX" id="testCase2Row">
                                                 <td>2</td>
                                                 <td><img id="testCase2" src="" width="20" height="20"></td>
-                                                <td id="score2">Score</td>
+                                                <td id="score2"></td>
                                         </tr>
                                         <tr class="odd gradeX" id="testCase3Row">
                                             <td>3</td>
                                             <td><img id="testCase3" src="" width="20" height="20"></td>
-                                            <td id="score3">Score</td>
+                                            <td id="score3"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -569,8 +573,6 @@ Mehrdad wants to become minister of Arpa’s land. Arpa has prepared an exam. Ex
             </div>
         </div>
     </div>
-
-    
 
     <!-- jQuery -->
     <script src="../../startbootstrap-sb-admin-2/vendor/jquery/jquery.min.js"></script>
