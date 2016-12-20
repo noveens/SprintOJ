@@ -277,7 +277,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 	};
 
 	$scope.requested = function(){
-		
+
 		if($scope.isadmin==1){
 			window.location="request.html";
 		}
