@@ -403,13 +403,17 @@ app.get("/getScoreQues", function(request,response){
 					
 					if(ques == qname) {
 						var c = 0;
+						var dash = 0;
 						for(var k=0;k<sco.length;k++) {
 							if(sco[k] == '1') {
 								c++;
 							}
+							else if(sco[k] == "-") {
+								k++;
+							}
 						}
 						var temp = (c/sco.length) * 100;
-						score[banda] = temp;
+						if(k == 0) score[banda] = temp;
 						break;
 					}
 				}
