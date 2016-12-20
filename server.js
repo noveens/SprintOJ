@@ -34,7 +34,7 @@ app.get('/check', function(request, response) {
 			var det = users[i].split(',');
 
 			if(det[0] == uname) {
-				if( passwordHash.verify(pass, det[1]) == true ) {
+				if( passwordHash.verify(pass, det[2]) == true ) {
 					console.log("new user logged in!");
 					response.end("2");
 				}
@@ -85,7 +85,7 @@ app.get('/newUser', function(request, response) {
 		}
 
 		if(fl == 0 && uname != 'undefined') {
-			fs.appendFile('users.csv', uname+','+hashedPass+'\n', function(err) {
+			fs.appendFile('users.csv', uname+',0,'+hashedPass+'\n', function(err) {
 				if(err) {
 					console.log('some error occured!');
 					response.end('0');
