@@ -129,6 +129,7 @@ app.get('/newUser', function(request, response) {
 
 app.post("/upload", function(request, response) {
 	var sampleFile;
+	var temp;
  
     if (!request.files) {
         response.send('No files were uploaded.');
