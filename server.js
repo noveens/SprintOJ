@@ -380,6 +380,59 @@ app.get('/addScore', function(request, response) {
 
 });
 
+
+app.get("/getScoreQues", function(request,response){
+	var qname = request.query.qname;
+	
+	fs.readFile('score.csv', function(err, data) {
+		if(err) {
+			console.log('some error occured!');
+			response.send("error!");
+		}
+	var mydata = data.toString().split('\n');
+	console.log("leng is " + mydata.length);
+	var score = [];
+	for (var i = 0; i < mydata.length; i++) {
+				var user;
+				var it=-1;
+				var req="none";
+				var user = mydata[i].toString().split(',');
+				var banda = user[0];
+			//	console.log("banda" + " " + banda);
+				for (var i = 0; i < user.length; i++) {
+					it = user[i].search(qname);
+					req = user[i];
+					if(it!=-1) {
+						//console.log(user[i]);
+						break;
+					}
+				}
+				if(req=="none") {
+					console.log('some error occured!');
+					response.send("error!");
+					continue;
+
+				}
+				//it2 = qname.length;
+				//console.log(it);
+			    var req2 = req.toString().split(':');
+				//console.log(req2);
+				var corr = 0;
+				for (var i = 0; i < req2[1].length; i++) {
+					if(req2[1][i] == '1') corr++;
+				}
+
+				//console.log(corr);
+				score.push([banda],[corr]);
+				console.log("i is "+i);
+				console.log("leng is " + mydata.length);
+			
+		}
+		console.log(score);	
+	});
+
+});
+
 app.get("/createQues", function(request, response) {
 	var text = request.query.text;
 	var test = request.query.test;
