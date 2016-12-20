@@ -7,7 +7,10 @@ Logmain.controller('ProjectController', function($scope, $http){
 		.success(function(response){
 			$scope.adminReq=[];
 			for(i=0;i<response.length-1;i++){$scope.adminReq.push(response[i]);}
-			console.log(response);
+			console.log(response.length);
+			if(response.length==1){
+				document.getElementById('noOne').innerHTML=('<b>Hooooooorrrrrrrraaaaaaaaaay .. No more requests left</b>');
+			}
 		});
 	}
 
