@@ -85,7 +85,7 @@ var myApp = angular.module('ProjectApp', []);
               
               
               if(Number((s.match(/1/g) || []).length) > Number((o.match(/1/g) || []).length)){
-                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
@@ -93,7 +93,7 @@ var myApp = angular.module('ProjectApp', []);
               }
 
               else if(oldScores[1]=='-'){
-               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=naive&str='+s;
                 $http.get(link)
                 .success(function(response){
                   

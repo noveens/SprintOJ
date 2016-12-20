@@ -159,7 +159,7 @@ var myApp = angular.module('ProjectApp', []);
                 s+=verdict[i];
                 o+=oldScores[i];
               }
-
+              console.log(oldScores);
               /*if(verdict[0]=='1'){document.getElementById("testCase1").src="greenTick.jpg";score[0]=33.3;}
               else{document.getElementById("testCase1").src="redCross.png";score[0]=0.0;}
               if(verdict[1]=='1'){document.getElementById("testCase2").src="greenTick.jpg";score[1]=33.3;}
@@ -175,7 +175,7 @@ var myApp = angular.module('ProjectApp', []);
               
               
               if(Number((s.match(/1/g) || []).length) > Number((o.match(/1/g) || []).length)){
-                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
+                var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=Bachgold&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
@@ -183,7 +183,7 @@ var myApp = angular.module('ProjectApp', []);
               }
 
               else if(oldScores[1]=='-'){
-               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=power&str='+s;
+               var link = '/addScore?name='+localStorage.getItem('storageName')+'&ques=Bachgold&str='+s;
                 $http.get(link)
                 .success(function(response){
                   
