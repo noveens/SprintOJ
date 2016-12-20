@@ -620,5 +620,161 @@ app.get("/createQues", function(request, response) {
 	});
 });
 
+app.get("/isAdmin", function(request, response) {
+	var name = request.query.name;
+	var fl = 0;
+
+	fs.readFile("users.csv", function(err, data) {
+		var users = data.toString().split("\n");
+		var n = users.length;
+
+		for(var i=0;i<n;i++) {
+			var u = users[i].split(",");
+
+			if(u[0] == name) {
+				console.log("admin request recieved for " + name + " !");
+				fl = 1;
+				response.send(u[1]);
+			}
+		}
+
+		if(fl == 0) {
+			console.log("no username found : " + name + " !");
+			response.end("-1");
+		}
+	});
+});
+
+app.get("/makeAdmin", function(request, response) {
+	var name = request.query.name;
+
+	fs.readFile("users.csv", function(err, data) {
+		var users = data.toString().split("\n");
+		var n = users.length;
+		var fl = 0;
+		var write = "";
+
+		for(var i=0;i<n-1;i++) {
+			var u = users[i].split(",");
+
+			if(u[0] == name) {
+				fl = 1;
+				if(u[1] == '0') {
+					write += u[0] + ",1," + u[2] + '\n';
+				}
+				else {
+					fl = 0;
+					write += users[i] + '\n';
+				}
+			}
+			else {
+				write += users[i] + '\n';
+			}
+		}
+
+		fs.writeFile("users.csv", write, function(err) {
+			if(err) {
+				console.log("some error occured!");
+				response.end('error!');
+			}
+
+			fs.readFile("requestAdmin.csv", function(err, data) {
+				if(err) {
+					console.log("some error occured!");
+					response.end('error!');
+				}
+
+				var x = data.toString().split("\n");
+				var xn = x.length;
+				var wr = "";
+
+				for(var i=0;i<xn-1;i++) {
+					if(x[i] != name) {
+						wr += x[i] + '\n';
+					}
+				}
+
+				fs.writeFile("requestAdmin.csv", wr, function(err) {
+					if(err) {
+						console.log("some error occured!");
+						response.send("error");
+					}
+
+					response.send(fl.toString());
+				});
+			});
+		});
+	});
+});
+
+app.get("/removeAdminRequest", function(request, response) {
+	var name = request.query.name;
+
+	fs.readFile("requestAdmin.csv", function(err, data) {
+		var users = data.toString().split("\n");
+		var n = users.length;
+		var write = "";
+		var fl = 0;
+
+		for(var i=0;i<n-1;i++) {
+			if(users[i] == name) {
+				fl = 1;
+			}
+			else {
+				write += users[i] + '\n';
+			}
+		}
+
+		fs.writeFile("requestAdmin.csv", write, function(err) {
+			if(err) {
+				console.log("some error occured!");
+				response.send("error");
+			}
+
+			response.send(fl.toString());
+		})
+	});
+});
+
+app.get("/requestAdmin", function(request, response) {
+	var name = request.query.name;
+	var fl = 0;
+
+	fs.readFile("requestAdmin.csv", function(err, data) {
+		var users = data.toString().split("\n");
+		var n = users.length;
+
+		for(var i=0;i<n;i++) {
+			if(users[i] == name) {
+				fl = 1;
+			}
+		}
+
+		if(fl == 0) {
+			fs.appendFile("requestAdmin.csv", name + "\n", function(err) {
+				if(err) {
+					response.end('0');
+				}
+				response.end('1');
+			});
+		}
+
+		else {
+			response.end('-1');
+		}
+	})
+
+});
+
+app.get("/getRequestAdmin", function(request, response) {
+	fs.readFile("requestAdmin.csv", function(err, data) {
+		if(err) {
+			response.send(err);
+		}
+
+		response.send(data.toString().split('\n'));
+	});
+});
+
 var server = app.listen(3000, function() {
 });
