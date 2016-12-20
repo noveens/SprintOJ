@@ -129,15 +129,25 @@ app.get('/newUser', function(request, response) {
 
 app.post("/upload", function(request, response) {
 	var sampleFile;
-	var temp;
- 
+	var lang = request.query.lang;
+	var extension  = ".cpp";
+	
+
+
     if (!request.files) {
         response.send('No files were uploaded.');
         return;
     }
 
     sampleFile = request.files.code;
-    sampleFile.mv('./temp/code.cpp', function(err) {
+    if(lang == "Java") extension = ".java";
+    if(lang == "C++") extension = ".cpp";
+    if(lang == "C") extension = ".c";
+    if(lang == "Python") extension = ".py";
+
+    console.log("shhfs");
+    console.log(extension);
+    sampleFile.mv('./temp/code'+ extension, function(err) {
         if (err) {
             response.status(500).send('some error occured!');
         }
@@ -145,8 +155,10 @@ app.post("/upload", function(request, response) {
         	var send = [];
         	var c = 0;
         	var name = request.body.name;
+        	console.log("require");
+        	console.log(name);
             for(var i=1;i<=3;i++) {
-				exec("bash ./bash/script.sh " + name + " " + i, function puts(error, stdout, stderr) { 
+				exec("bash ./bash/script.sh " + name + " " + i + " " +extension, function puts(error, stdout, stderr) { 
 					if(stdout[2] == "0") {
 						var tt = {};
 						tt[stdout[0]] = 1;
