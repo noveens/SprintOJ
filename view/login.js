@@ -277,7 +277,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 	};
 
 	$scope.requested = function(){
-		alert('Hurray');
+		//alert('Hurray');
 		if($scope.isadmin==1){
 			window.location="request.html";
 		}
