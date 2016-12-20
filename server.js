@@ -409,11 +409,11 @@ app.get("/getScoreQues", function(request,response){
 								c++;
 							}
 							else if(sco[k] == "-") {
-								k++;
+								dash++;
 							}
 						}
 						var temp = (c/sco.length) * 100;
-						if(k == 0) score[banda] = temp;
+						if(dash == 0) score[banda] = temp;
 						break;
 					}
 				}
