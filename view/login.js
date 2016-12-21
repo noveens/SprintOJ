@@ -8,6 +8,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 	
 	$scope.idex=-1;
 	$scope.isadmin="";
+	$scope.marks=[];
 	$scope.display=[];
 	$scope.Answers=[];
 	var uname, pass, sign_name, sign_pass, sign_re_pass;
@@ -89,6 +90,13 @@ Logmain.controller('ProjectController', function($scope, $http){
 		var userLoggedIn = localStorage.getItem("storageName");
 		var show="";
 
+		$http.get('/getProfile?uname='+userLoggedIn)
+		.success(function(response){
+			console.log(response);
+			$scope.marks=(response);
+		});
+
+
 		$http.get('/isAdmin?name='+userLoggedIn)
 		.success(function(response){
 			console.log(response);
@@ -132,21 +140,12 @@ Logmain.controller('ProjectController', function($scope, $http){
 				for(i in response){
 					
 					if (response.hasOwnProperty(i)) {
-						$http.get('/getMarks?uname='+$scope.usernameLoggedIn+'&qname='+i)
-						.success(function(response){
-							//console.log(response);
-							marks=response;
-							
-							
-						});
-						if(!marks){marks='-'}
-						$scope.display.push({'ques':i,'id':x, 'marks':marks});
-
+						$scope.display.push({'ques':i,'id':x, 'marks':$scope.marks[i]});
 						x+=1;
 					}
 				}
 
-						
+				
 
 				
 				
