@@ -282,11 +282,14 @@ Logmain.controller('ProjectController', function($scope, $http){
 			window.location="request.html";
 		}
 		else{
+			alert('Yo boi');
+			$scope.tell="";
 			$http.get('/requestAdmin?name='+localStorage.getItem("storageName"))
 			.success(function(response){
 				if(response==1){$scope.tell="Successfull request!";}
 				else if(response==-1){$scope.tell="Already request was made!";}
 				else if(response==0){$scope.tell="Unsuccessfull request!";}
+				document.getElementById('tellMessage').style.display="block";	
 			});
 		}
 	};
