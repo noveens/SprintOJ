@@ -1,0 +1,51 @@
+{
+  "name": "SprintOJ",
+  "version": "0.0.0",
+  "description": "##How to setup:",
+  "main": "server.js",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "append-field": "^0.1.0",
+    "busboy": "^0.2.13",
+    "concat-stream": "^1.5.2",
+    "core-util-is": "^1.0.2",
+    "dicer": "^0.2.5",
+    "ee-first": "^1.1.1",
+    "express": "^4.14.0",
+    "express-fileupload": "^0.0.5",
+    "inherits": "^2.0.3",
+    "isarray": "^0.0.1",
+    "media-typer": "^0.3.0",
+    "mime-db": "^1.25.0",
+    "mime-types": "^2.1.13",
+    "minimist": "^0.0.8",
+    "mkdirp": "^0.5.1",
+    "multer": "^1.2.1",
+    "object-assign": "^3.0.0",
+    "on-finished": "^2.3.0",
+    "password-hash": "^1.2.2",
+    "process-nextick-args": "^1.0.7",
+    "readable-stream": "^1.1.14",
+    "replace": "^0.3.0",
+    "streamsearch": "^0.1.2",
+    "string_decoder": "^0.10.31",
+    "type-is": "^1.6.14",
+    "xtend": "^4.0.1",
+    "util-deprecate": "^1.0.2",
+    "typedarray": "^0.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noveens/SprintOJ.git"
+  },
+  "author": "Noveen Sachdeva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noveens/SprintOJ/issues"
+  }
+}
