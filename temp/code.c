@@ -1,10 +1,16 @@
 #include<stdio.h>
 int main(){
-	int n;scanf("%d",&n);
-	if(n==0){printf("1");}
-	else if((n-1)%4==0){printf("8");}
-	else if((n-2)%4==0){printf("4");}
-	else if((n-3)%4==0){printf("2");}
-	else if((n-4)%4==0){printf("6");}
+	int i,a=0;int d=0,p,n;
+	scanf("%d",&n);
+	char s[n];
+	scanf("%s",s);
+	p=strlen(s);
+	for(i=0;i<p;i++){
+		if(s[i]=='A')a++;
+		else d++;
+	}
+	if(a>d)printf("Anton\n");
+	else if(d>a)printf("Danik\n");
+	else printf("Friendship\n");
 	return 0;
 }

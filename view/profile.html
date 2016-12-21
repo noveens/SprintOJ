@@ -407,6 +407,7 @@
                                             <th>Question</th>
                                             <th>Difficulty</th>
                                             <th>Status</th>
+                                            <th>Score</th>
                                             <th>Preiview</th>
                                         </tr>
                                     </thead>
@@ -416,6 +417,7 @@
                                             <td>{{name.ques}}</td>
                                             <td>Easy</td>
                                             <td><img src="" width="20" height="20" id="{{name.ques}}""></td>
+                                            <td>{{name.marks}}</td>
                                             <td><a ng-click="goTo(name.ques)" target="_blank" class="btn btn-success btn-block">Solve</a></td>
                                         </tr>
 <!-- 
@@ -455,34 +457,7 @@
                     </div>
 
                     <!-- /.col-lg-12 -->
-                    <div class="col-lg-8"><br>
-                        <div class="panel panel-success">
-
-                            <div class="panel-heading">
-                                <b>Top 10 in Leaderboard.</b>
-                            </div>
-
-                            <div class="panel-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr class="odd gradeX">
-                                            <th>User #</th>
-                                            <th>Username</th>
-                                            <th>Score</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr id="inside" class="odd gradeX" ng-repeat="(x, score) in allS">
-                                            <td>{{x+1}}</td>
-                                            <td>{{score[0]}}</td>
-                                            <td>{{score[1]}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <b><div id="totalM"></div></b>
-                            </div>
-                         </div>
-                </div>
+                    
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->

@@ -128,11 +128,16 @@ Logmain.controller('ProjectController', function($scope, $http){
 			console.log(response);
 			if(response!=0){
 				
-				var x=0;
+				var x=0,marks;
 				for(i in response){
 					
 					if (response.hasOwnProperty(i)) {
-						$scope.display.push({'ques':i,'id':x});
+						$http.get('/getMarks?name='+$scope.usernameLoggedIn+'&ques='+i)
+						.success(function(response){
+							marks=response;
+						});
+
+						$scope.display.push({'ques':i,'id':x, 'marks':marks});
 						x+=1;
 					}
 				}
