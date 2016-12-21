@@ -205,28 +205,29 @@ var myApp = angular.module('ProjectApp', []);
               var ext = fileName.split('.').pop();
                if(ext == "c" && $scope.language == "C" ){
                         fileUpload.uploadFileToUrl(file, uploadUrl);
-                        $scope.messageBachgold='';
+                        $scope.messageAston='';
                 }
                 else if(ext == "cpp" && $scope.language == "C++")
                 {                
                         fileUpload.uploadFileToUrl(file, uploadUrl);
-                        $scope.messageBachgold='';
+                        $scope.messageAston='';
                 }
                 else if(ext == "java" && $scope.language == "Java")
                 {
                         fileUpload.uploadFileToUrl(file, uploadUrl);
-                        $scope.messageBachgold='';
+                        $scope.messageAston='';
                 }
                 else if(ext == "py" && $scope.language == "Python")
                 {
                         fileUpload.uploadFileToUrl(file, uploadUrl);
-                        $scope.messageBachgold='';
+                        $scope.messageAston='';
                 }
                 else if($scope.language == "")
                 {
-                        alert('Please select a language');  
+                        // alert('Please select a language');  
+                        $scope.messageAston = 'Please select a language';
                 }
-                else{$scope.messageBachgold='You have submitted a wrong file. Please Check again!'}
+                else{$scope.messageAston='You have submitted a wrong file. Please Check again!'}
             }
             else{
               $scope.messageAston='Please upload a file to continue'; 
