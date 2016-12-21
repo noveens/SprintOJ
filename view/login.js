@@ -132,19 +132,23 @@ Logmain.controller('ProjectController', function($scope, $http){
 				for(i in response){
 					
 					if (response.hasOwnProperty(i)) {
-						$http.get('/getMarks?name='+$scope.usernameLoggedIn+'&ques='+i)
+						$http.get('/getMarks?uname='+$scope.usernameLoggedIn+'&qname='+i)
 						.success(function(response){
+							//console.log(response);
 							marks=response;
+							
+							
 						});
-
+						if(!marks){marks='-'}
 						$scope.display.push({'ques':i,'id':x, 'marks':marks});
+
 						x+=1;
 					}
 				}
 
 						
 
-				console.log($scope.display);
+				
 				
 				for(i=0;i<response.length;i++){
 					//console.log(response[i]);
