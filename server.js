@@ -390,7 +390,7 @@ app.get("/getMarks", function(request,response){
 		}
 
 		var mydata = data.toString().split('\n');
-		var score = [];
+		var score;
 		
 		for (var i = 0; i < mydata.length; i++) {
 			if(mydata[i]) {
@@ -413,7 +413,7 @@ app.get("/getMarks", function(request,response){
 							}
 						}
 						var temp = (c/sco.length) * 100;
-						if(dash == 0) score.push(temp);
+						if(dash == 0) score=temp;
 						break;
 					}
 				}
