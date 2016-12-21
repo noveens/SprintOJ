@@ -253,16 +253,15 @@ var myApp = angular.module('ProjectApp', []);
               });
 
               console.log(items[0]);
-              $scope.allS = [];
-              for(i=0;i<10 && i<items.length;i++){
-                $scope.allS.push(items[i]);
-              }
+              $scope.allS = [];for(i=0;i<10 && i<items.length;i++){items[i].push(i);$scope.allS.push(items[i]);}
               for(i=0;i<items.length;i++){
                 if(items[i][0] == localStorage.getItem('storageName')){
                   $scope.idex = i+1;
                 }
               }
+              if($scope.idex>10 && $scope.idex!=-1){items[$scope.idex-1].push($scope.idex-1);$scope.allS.push(items[$scope.idex-1]);$scope.idex=11;}
               $scope.id = "Id" + $scope.idex;
+
           });
         }
 
