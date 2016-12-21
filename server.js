@@ -379,8 +379,7 @@ app.get('/addScore', function(request, response) {
 	});
 
 });
-app.get("/getMarks", function(request,response){
-	var qname = request.query.qname;
+app.get("/getProfile", function(request,response){
 	var uname = request.query.uname;
 	
 	fs.readFile('score.csv', function(err, data) {
@@ -390,18 +389,18 @@ app.get("/getMarks", function(request,response){
 		}
 
 		var mydata = data.toString().split('\n');
-		var score = [];
-		
+		var score={};
 		for (var i = 0; i < mydata.length; i++) {
 			if(mydata[i]) {
 				var user = mydata[i].split(',');
 				var banda = user[0];
-
-				for (var j = 1; j < user.length; j++) {
+				for (var j = 1; j < user.length; j++) 
+				{
+					console.log("user[j] " +j + " " +user[j]);
 					var ques = user[j].split(":")[0];
 					var sco = user[j].split(":")[1];
-					
-					if(ques == qname && banda == uname) {
+					if(banda == uname) {
+						console.log("jth ques " + ques);
 						var c = 0;
 						var dash = 0;
 						for(var k=0;k<sco.length;k++) {
@@ -413,8 +412,16 @@ app.get("/getMarks", function(request,response){
 							}
 						}
 						var temp = (c/sco.length) * 100;
-						if(dash == 0) score.push(temp);
-						break;
+						var a;
+						if(dash == 0) {
+							 score[ques] = temp;
+							 console.log(score);
+						}
+						else
+						{
+							score[ques] = "-";
+							console.log(score);
+						}
 					}
 				}
 			}
