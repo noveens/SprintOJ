@@ -188,6 +188,11 @@ var myApp = angular.module('ProjectApp', []);
         $scope.ProgPy = function(){
           $scope.language = "Python";
         };
+        $scope.testcaseshow = function(e){
+        var name = "naive";
+        var link = "../../getTestcase?name="+name+"&num="+e;
+        window.open(link,'_blank');
+};
 
 
 
