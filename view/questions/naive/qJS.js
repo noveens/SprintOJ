@@ -117,10 +117,30 @@ var myApp = angular.module('ProjectApp', []);
             if(file!=undefined){
               var fileName = file.name;
               var ext = fileName.split('.').pop();
-              if(ext == "c" || ext == "cpp" || ext == "py" || ext == "java"){
-                fileUpload.uploadFileToUrl(file, uploadUrl);
-                $scope.messageNaive='';
-              }else{$scope.messageNaive='You can only submit .c or .cpp files.'}
+               if(ext == "c" && $scope.language == "C" ){
+                        fileUpload.uploadFileToUrl(file, uploadUrl);
+                        $scope.messageBachgold='';
+                }
+                else if(ext == "cpp" && $scope.language == "C++")
+                {                
+                        fileUpload.uploadFileToUrl(file, uploadUrl);
+                        $scope.messageBachgold='';
+                }
+                else if(ext == "java" && $scope.language == "Java")
+                {
+                        fileUpload.uploadFileToUrl(file, uploadUrl);
+                        $scope.messageBachgold='';
+                }
+                else if(ext == "py" && $scope.language == "Python")
+                {
+                        fileUpload.uploadFileToUrl(file, uploadUrl);
+                        $scope.messageBachgold='';
+                }
+                else if($scope.language == "")
+                {
+                        alert('Please select a language');  
+                }
+                else{$scope.messageBachgold='You have submitted a wrong file. Please Check again!'}
             }
             else{
               $scope.messageNaive='Please upload a file to continue'; 
