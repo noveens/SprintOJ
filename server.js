@@ -379,7 +379,52 @@ app.get('/addScore', function(request, response) {
 	});
 
 });
+app.get("/getMarks", function(request,response){
+	var qname = request.query.qname;
+	var uname = request.query.uname;
+	
+	fs.readFile('score.csv', function(err, data) {
+		if(err) {
+			console.log('some error occured!');
+			response.send("error!");
+		}
 
+		var mydata = data.toString().split('\n');
+		var score = {};
+		
+		for (var i = 0; i < mydata.length; i++) {
+			if(mydata[i]) {
+				var user = mydata[i].split(',');
+				var banda = user[0];
+
+				for (var j = 1; j < user.length; j++) {
+					var ques = user[j].split(":")[0];
+					var sco = user[j].split(":")[1];
+					
+					if(ques == qname && banda == uname) {
+						var c = 0;
+						var dash = 0;
+						for(var k=0;k<sco.length;k++) {
+							if(sco[k] == '1') {
+								c++;
+							}
+							else if(sco[k] == "-") {
+								dash++;
+							}
+						}
+						var temp = (c/sco.length) * 100;
+						if(dash == 0) score[banda] = temp;
+						break;
+					}
+				}
+			}
+		}
+
+		console.log(score);	
+		response.send(score);
+	});
+
+});
 app.get("/getScoreQues", function(request,response){
 	var qname = request.query.qname;
 	
