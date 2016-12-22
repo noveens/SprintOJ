@@ -11,6 +11,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 	$scope.marks=[];
 	$scope.display=[];
 	$scope.Answers=[];
+	$scope.usernameLoggedIn="";
 	var uname, pass, sign_name, sign_pass, sign_re_pass;
 	$scope.message = "";
 	$scope.Username = "";
