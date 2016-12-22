@@ -8,9 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <title>Sprint OJ</title>
-
+    <style type="text/css">
+        #tellMessage{
+            display: none;
+        }
+    </style>
     <style type="text/css">
         .second {
             width: 100%;
@@ -326,12 +330,10 @@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Admin's Corner<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li id="admin2" ng-click="requested()">
-                                    
+                                <li id="admin2" ng-click="requested()">        
                             </li>
                             <li id="tellMessage">
-                                <a><b>{{tell}}</b></a>
-                                
+                                <a><b>{{tell}}</b></a>    
                             </li>
                             <li id="uploadQuest">
                                 

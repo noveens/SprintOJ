@@ -281,6 +281,36 @@ $scope.getTop = function(){
         }
         if($scope.idex>10 && $scope.idex!=-1){items[$scope.idex-1].push($scope.idex-1);$scope.allS.push(items[$scope.idex-1]);$scope.idex=11;}
         $scope.id = "Id" + $scope.idex;
+            var userLoggedIn=localStorage.getItem("storageName");
+    $http.get('/isAdmin?name='+userLoggedIn)
+    .success(function(response){
+      console.log(response);
+      $scope.isadmin=response;
+      if(response=="1"){
+        show="Admin requests !";
+        var mydiv = document.getElementById("uploadQuest");
+        var aTag = document.createElement('a');
+        aTag.setAttribute('href',"../../uploadQuestion.html");
+        aTag.innerHTML = "Upload Question";
+        mydiv.appendChild(aTag);
+
+        var mydiv2 = document.getElementById("admin2");
+        var aTag2 = document.createElement('a');
+        aTag2.setAttribute('href',"../../request.html");
+        aTag2.innerHTML = show;
+        mydiv2.appendChild(aTag2);
+
+      }
+      else {
+        show="Become admin !";
+        var mydiv3 = document.getElementById("admin2");
+        var aTag3 = document.createElement('a');
+        aTag3.setAttribute('href','#');
+
+        aTag3.innerHTML = show;
+        mydiv3.appendChild(aTag3);
+      }
+    });
 
 });
 }
