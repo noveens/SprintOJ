@@ -396,7 +396,7 @@ app.get("/getProfile", function(request,response){
 				var banda = user[0];
 				for (var j = 1; j < user.length; j++) 
 				{
-					console.log("user[j] " +j + " " +user[j]);
+				//	console.log("user[j] " +j + " " +user[j]);
 					var ques = user[j].split(":")[0];
 					var sco = user[j].split(":")[1];
 					if(banda == uname) {
@@ -415,19 +415,19 @@ app.get("/getProfile", function(request,response){
 						var a;
 						if(dash == 0) {
 							 score[ques] = temp;
-							 console.log(score);
+						//	 console.log(score);
 						}
 						else
 						{
 							score[ques] = "-";
-							console.log(score);
+					//		console.log(score);
 						}
 					}
 				}
 			}
 		}
 
-		console.log(score);	
+		//console.log(score);	
 		response.send(score);
 	});
 
