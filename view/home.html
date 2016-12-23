@@ -434,6 +434,7 @@
                                             <th>Question</th>
                                             <th>Difficulty</th>
                                             <th>Status</th>
+                                            <th>Score</th>
                                             <th>Preiview</th>
                                         </tr>
                                     </thead>
@@ -441,8 +442,9 @@
                                         <tr class="odd gradeX" ng-repeat="name in display" id="displayQues">
                                             <td>{{name.id + 1}}</td>
                                             <td>{{name.ques}}</td>
-                                            <td>Easy</td>
+                                            <td>Easy</td>                                            
                                             <td><img src="" width="20" height="20" id="{{name.ques}}""></td>
+                                            <td>{{name.marks}}</td>
                                             <td><a ng-click="goTo(name.ques)" target="_blank" class="btn btn-success btn-block">Solve</a></td>
                                         </tr>
 <!-- 
