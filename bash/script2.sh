@@ -32,7 +32,7 @@ else
 
 	for ((i=1; i<=$n; i++))
 	do
-		g="./testcases/"$1
+		g="./testcases/"$2
 		b=$g"/in_"
 		c=$b$i
 		d=$g"/out_"

@@ -512,7 +512,7 @@ app.get("/createQues", function(request, response) {
 
 
 
-	exec("bash ./bash/script2.sh " + name.split(" ")[0] + dirName, function puts(error, stdout, stderr) {
+	exec("bash ./bash/script2.sh " + name.split(" ")[0] + " " + dirName, function puts(error, stdout, stderr) {
 
 		if(error) {
 			console.log(error);
