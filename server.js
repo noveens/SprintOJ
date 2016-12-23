@@ -85,12 +85,6 @@ app.get('/newUser', function(request, response) {
 		}
 
 		if(fl == 0 && uname != 'undefined') {
-			fs.appendFile('users.csv', uname+',0,'+hashedPass+'\n', function(err) {
-				if(err) {
-					console.log('some error occured!');
-					response.end('0');
-				}
-			});
 
 			fs.readFile('score.csv', function(err, data) {
 				if(err) {
@@ -118,11 +112,25 @@ app.get('/newUser', function(request, response) {
 						console.log('2:some error occured!');
 						response.end('0');
 					}
+
+					fs.appendFile('users.csv', uname+',0,'+hashedPass+'\n', function(err) {
+						if(err) {
+							console.log('some error occured!');
+							response.end('0');
+						}
+						
+						fs.appendFile('score_contests.csv', uname+'\n', function(err) {
+							if(err) {
+								console.log('some error occured!');
+								response.end('0');
+							}
+
+							console.log("new user registered!");
+							response.end('1');
+						})
+					});
 				});
 			});
-
-			console.log("new user registered!");
-			response.end('1');
 		}
 	})
 });
@@ -472,6 +480,15 @@ app.get("/createQues", function(request, response) {
 	var inform = request.query.inform;
 	var outform = request.query.outform;
 	var name = request.query.name;
+	var contestNum = "";
+	var alpha = "";
+	var dirName = "";
+
+	if(request.query.contestNum) {
+		contestNum = request.query.contestNum;
+		alpha = request.query.alpha;
+		dirName = contestNum + alpha;
+	}
 
 	text = text.replace("%20", " ");
 	text = text.replace("$20", "\n");
@@ -495,36 +512,41 @@ app.get("/createQues", function(request, response) {
 
 
 
-	exec("bash ./bash/script2.sh " + name.split(" ")[0], function puts(error, stdout, stderr) {
+	exec("bash ./bash/script2.sh " + name.split(" ")[0] + dirName, function puts(error, stdout, stderr) {
 
 		if(error) {
 			console.log(error);
 			response.send('error');
 		}
 
-		fs.readFile('./score.csv', function(err, data) {
-			if(err) {
-				console.log(err);
-				response.end("error");
-			}
-
-			var temp = data.toString().split("\n");
-			var n = temp.length;
-			var send = "";
-
-			for(var i=0;i<n-1;i++) {
-				var te = temp[i];
-				te += "," + name.split(" ")[0] + ":---\n";
-				send += te;
-			}
-
-			fs.writeFile('./score.csv', send, function(err) {
+		if(dirName) {
+			//
+		}
+		else {
+			fs.readFile('./score.csv', function(err, data) {
 				if(err) {
 					console.log(err);
 					response.end("error");
 				}
-			})
-		});
+
+				var temp = data.toString().split("\n");
+				var n = temp.length;
+				var send = "";
+
+				for(var i=0;i<n-1;i++) {
+					var te = temp[i];
+					te += "," + name.split(" ")[0] + ":---\n";
+					send += te;
+				}
+
+				fs.writeFile('./score.csv', send, function(err) {
+					if(err) {
+						console.log(err);
+						response.end("error");
+					}
+				})
+			});
+		}
 		
 		fs.readFile('./temp/first.txt', function(err, data) {
 			if(err) {
@@ -572,7 +594,16 @@ app.get("/createQues", function(request, response) {
 				var inp = lines[i-1].split(",")[0];	
 				var out = lines[i-1].split(",")[1];
 
-				fs.writeFile("./testcases/" + name.split(" ")[0] +"/in_" + i.toString(), inp, function(err) {
+				var inii;
+
+				if(dirName) {
+					inii = dirName;
+				}
+				else {
+					inii = name.split(" ")[0];
+				}
+
+				fs.writeFile("./testcases/" + inii +"/in_" + i.toString(), inp, function(err) {
 					if(err) {
 						console.log(err);
 						response.send('error');
@@ -584,7 +615,7 @@ app.get("/createQues", function(request, response) {
 					}
 				});
 
-				fs.writeFile("./testcases/" + name.split(" ")[0] +"/out_" + i.toString(), out, function(err) {
+				fs.writeFile("./testcases/" + inii +"/out_" + i.toString(), out, function(err) {
 					if(err) {
 						console.log(err);
 						response.send('error');
@@ -623,17 +654,33 @@ app.get("/createQues", function(request, response) {
 					js = js.split("power").join(name.split(" ")[0]);
 					js = js.split("Power").join((name.charAt(0).toUpperCase() + name.slice(1)).split(" ")[0]);
 					
-					fs.writeFile("./view/questions/" + name.split(" ")[0] + "/" + "qJS.js", js, function(err) {
-						if(err) {
-							console.log(err);
-							response.send('error');
-						}
+					if(dirName) {
+						fs.writeFile("./view/contests/" + dirName + "/" + "qJS.js", js, function(err) {
+							if(err) {
+								console.log(err);
+								response.send('error');
+							}
 
-						fl++;
-						if(fl == 9) {
-							response.send("1");
-						}
-					});
+							fl++;
+							if(fl == 9) {
+								response.send("1");
+							}
+						});
+					}
+
+					else {
+						fs.writeFile("./view/questions/" + name.split(" ")[0] + "/" + "qJS.js", js, function(err) {
+							if(err) {
+								console.log(err);
+								response.send('error');
+							}
+
+							fl++;
+							if(fl == 9) {
+								response.send("1");
+							}
+						});
+					}
 
 					fl++;
 					if(fl == 9) {
@@ -644,17 +691,33 @@ app.get("/createQues", function(request, response) {
 				first = first.split("aston").join(name.split(" ")[0]);
 				first = first.split("Aston").join((name.charAt(0).toUpperCase() + name.slice(1)).split(" ")[0]);
 
-				fs.writeFile("./view/questions/" + name.split(" ")[0] + "/" + name.split(" ")[0] + ".html", first, function(err) {
-					if(err) {
-						console.log(err);
-						response.send('error');
-					}
+				if(dirName) {
+					fs.writeFile("./view/contests/" + dirName + "/" + dirName + ".html", first, function(err) {
+						if(err) {
+							console.log(err);
+							response.send('error');
+						}
 
-					fl++;
-					if(fl == 9) {
-						response.send("1");
-					}
-				});
+						fl++;
+						if(fl == 9) {
+							response.send("1");
+						}
+					});
+				}
+
+				else {
+					fs.writeFile("./view/questions/" + name.split(" ")[0] + "/" + name.split(" ")[0] + ".html", first, function(err) {
+						if(err) {
+							console.log(err);
+							response.send('error');
+						}
+
+						fl++;
+						if(fl == 9) {
+							response.send("1");
+						}
+					});
+				}
 			});
 		});
 	});
@@ -813,6 +876,43 @@ app.get("/getRequestAdmin", function(request, response) {
 		}
 
 		response.send(data.toString().split('\n'));
+	});
+});
+
+app.get("/newContest", function(request, response) {
+	var numQuestion = request.query.numQuestion;
+	var startDate = request.query.startDate;
+	var startTime = request.query.startTime;
+	var duration = request.query.duration;
+	var contestNum = request.query.contestNum;
+
+	fs.appendFile('pendingContest.csv', contestNum+','+startDate+','+startTime+','+duration+','+numQuestion+'\n', function(err) {
+		if(err) {
+			console.log('error = ' + err);
+			response.end('error');
+		}
+
+		response.end('1');
+	});
+});
+
+app.get("/getContestNum", function(request, response) {
+	fs.readFile('number.csv', function(err, data) {
+		if(err) {
+			console.log('error');
+			response.end('error');
+		}
+
+		var num = data.toString();
+
+		fs.writeFile('number.csv', Number(num) + Number(1), function(err) {
+			if(err) {
+				console.log('error');
+				response.end('error');
+			}
+
+			response.send(num);
+		});
 	});
 });
 
