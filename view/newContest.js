@@ -2,9 +2,16 @@ var myApp = angular.module('ProjectApp', []);
  
 myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http,fileUpload){
     $scope.run=[];
-    $scope.callDown=function(){
-      alert($scope.numberQuestion);
-      for(var i =0;i<$scope.numberQuestion;i++){$scope.run.push(i);}
+    $scope.numberQuestion=localStorage.getItem('numberOfEntries')=='undefined'?'':localStorage.getItem('numberOfEntries');
+    //if($scope.numberQuestion==undefined){$scope.numberQuestion=0;}
+
+
+
+    $scope.callDown=function(){ 
+      localStorage.setItem('clicked',0);
+      localStorage.setItem('numberOfEntries',$scope.numberQuestion);
+      $scope.numberQuestion=localStorage.getItem('numberOfEntries');;
+      for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push(i);}
       smoothScroll(document.getElementById('second'));
     };
 
@@ -129,6 +136,14 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
         document.getElementById('power').src="na.png";
       }
       console.log($scope.score);
+
+      console.log(localStorage.getItem('clicked'));
+
+      if(localStorage.getItem('clicked')!=0){
+        console.log(localStorage.getItem('clicked'));
+        $scope.callDown();
+      }
+
     });
   };
 
