@@ -390,17 +390,16 @@ app.get("/getProfile", function(request,response){
 
 		var mydata = data.toString().split('\n');
 		var score={};
+
 		for (var i = 0; i < mydata.length; i++) {
 			if(mydata[i]) {
 				var user = mydata[i].split(',');
 				var banda = user[0];
 				for (var j = 1; j < user.length; j++) 
 				{
-				//	console.log("user[j] " +j + " " +user[j]);
 					var ques = user[j].split(":")[0];
 					var sco = user[j].split(":")[1];
 					if(banda == uname) {
-						console.log("jth ques " + ques);
 						var c = 0;
 						var dash = 0;
 						for(var k=0;k<sco.length;k++) {
@@ -412,25 +411,14 @@ app.get("/getProfile", function(request,response){
 							}
 						}
 						var temp = (c/sco.length) * 100;
-						var a;
-						if(dash == 0) {
-							 score[ques] = temp;
-						//	 console.log(score);
-						}
-						else
-						{
-							score[ques] = "-";
-					//		console.log(score);
-						}
+						if(dash == 0) score[ques] = temp;
+						else score[ques] = "-";
 					}
 				}
 			}
 		}
-
-		//console.log(score);	
 		response.send(score);
 	});
-
 });
 app.get("/getScoreQues", function(request,response){
 	var qname = request.query.qname;
