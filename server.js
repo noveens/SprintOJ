@@ -904,6 +904,18 @@ app.get("/getContestNum", function(request, response) {
 		}
 
 		var num = data.toString();
+		response.send(num);
+	});
+});
+
+app.get("/addContestNum", function(request, response) {
+	fs.readFile('number.csv', function(err, data) {
+		if(err) {
+			console.log('error');
+			response.end('error');
+		}
+
+		var num = data.toString();
 
 		fs.writeFile('number.csv', Number(num) + Number(1), function(err) {
 			if(err) {
@@ -911,7 +923,7 @@ app.get("/getContestNum", function(request, response) {
 				response.end('error');
 			}
 
-			response.send(num);
+			response.send('1');
 		});
 	});
 });
