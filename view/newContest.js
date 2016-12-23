@@ -3,29 +3,42 @@ var myApp = angular.module('ProjectApp', []);
 myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http,fileUpload){
     $scope.run=[];
     $scope.index=[];
-    if(localStorage.getItem('index')==undefined){
-      for(i=0;i<10;i++){$scope.index.push('Upload!');}
-      localStorage.setItem('index',JSON.stringify($scope.index));
+    var buttn=[];
+    for(i=0;i<10;i++){$scope.index[i]='Upload!';}
+    for(i=0;i<10;i++){buttn[i]='Done';}
+    if((localStorage['taskList'].match(/Done/g) || []).length==localStorage.getItem('numberOfEntries')){
+      localStorage.setItem('numberOfEntries','undefined');
+      localStorage['taskList']=undefined;
+      localStorage['count']=0;
+
+      window.location = "home.html";
     }
+    if(localStorage['taskList']=='undefined'){localStorage['taskList']=JSON.stringify($scope.index);console.log(localStorage['taskList']);}  
     $scope.numberQuestion=localStorage.getItem('numberOfEntries')=='undefined'?'':localStorage.getItem('numberOfEntries');
     //if($scope.numberQuestion==undefined){$scope.numberQuestion=0;}
 
 
 
     $scope.callDown=function(){ 
+      console.log(localStorage['count']);
+      localStorage['count']=Number(localStorage['count']) + 1;
       localStorage.setItem('clicked',0);
       localStorage.setItem('numberOfEntries',$scope.numberQuestion);
       $scope.numberQuestion=localStorage.getItem('numberOfEntries');
-      $scope.index=JSON.parse(localStorage.getItem('index'));
-      for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i+1]});}
+      console.log(JSON.parse(localStorage['taskList']));
+      var temp=JSON.parse(localStorage['taskList']);
+      if(temp!= undefined){
+        $scope.index=temp;
+      }
+      for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i]});}
       smoothScroll(document.getElementById('second'));
     };
 
     $scope.getNumber=function(x){
-      var temp=JSON.parse(localStorage.getItem('index'));
-      temp[x]='Done';
-      localStorage.setItem('index',JSON.stringify(temp));
-    }
+        $scope.index[x-1]='Done';
+        localStorage['taskList']=JSON.stringify($scope.index);
+        
+     }
 
 
     $scope.requested = function(){
