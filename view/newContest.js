@@ -2,6 +2,11 @@ var myApp = angular.module('ProjectApp', []);
  
 myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http,fileUpload){
     $scope.run=[];
+    $scope.index=[];
+    if(localStorage.getItem('index')==undefined){
+      for(i=0;i<10;i++){$scope.index.push('Upload!');}
+      localStorage.setItem('index',JSON.stringify($scope.index));
+    }
     $scope.numberQuestion=localStorage.getItem('numberOfEntries')=='undefined'?'':localStorage.getItem('numberOfEntries');
     //if($scope.numberQuestion==undefined){$scope.numberQuestion=0;}
 
@@ -10,12 +15,17 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
     $scope.callDown=function(){ 
       localStorage.setItem('clicked',0);
       localStorage.setItem('numberOfEntries',$scope.numberQuestion);
-      $scope.numberQuestion=localStorage.getItem('numberOfEntries');;
-      for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push(i);}
+      $scope.numberQuestion=localStorage.getItem('numberOfEntries');
+      $scope.index=JSON.parse(localStorage.getItem('index'));
+      for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i+1]});}
       smoothScroll(document.getElementById('second'));
     };
 
-
+    $scope.getNumber=function(x){
+      var temp=JSON.parse(localStorage.getItem('index'));
+      temp[x]='Done';
+      localStorage.setItem('index',JSON.stringify(temp));
+    }
 
 
     $scope.requested = function(){
