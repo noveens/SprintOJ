@@ -12,13 +12,9 @@
     <title>Sprint OJ</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <!-- <script src="login.js"></script> -->
+    <script src="uploadContest.js"></script>
     
-    <style type="text/css">
-        #tellMessage{
-            display: none;
-        }
-    </style>
-
     <!-- Bootstrap Core CSS -->
     <link href="./startbootstrap-sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -30,13 +26,17 @@
 
     <!-- Custom Fonts -->
     <link href="./startbootstrap-sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
     <style type="text/css">
-        #inside:nth-child({{idex}}){
-                background-color: GreenYellow !important;
-                font-family: Arial;
-                font-weight: bold;
-            }
+        #tellMessage{
+            display: none;
+        }
+    </style>
+    <style type="text/css">
+    #inside:nth-child({{idex}}){
+            background-color: GreenYellow !important;
+            font-family: Arial;
+            font-weight: bold;
+        }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -301,7 +301,6 @@
                         <li>
                             <a href="home.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-                        
                         <!-- <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -323,49 +322,18 @@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Admin's Corner<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                            <li id="admin2" ng-click="requested()">
+                                <li id="admin2" ng-click="requested()">
                                     
                             </li>
                             <li id="tellMessage">
-                                <a><b>{{tell}}</b></a>
-                                
+                                <a><b>{{tell}}</b></a>    
                             </li>
                             <li id="uploadQuest">
                                 
                             </li>
-                                <!-- <li>
-                                    <a href="panels-wells.html">Panels and Wells</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Notifications</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li> -->
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>
-
-                        <!-- <li id="admin2" ng-click="requested()">
-                                
-                        </li>
-                        <li id="tellMessage">
-                            <a><b>{{tell}}</b></a>
-                            
-                        </li>
-                        <li id="uploadQuest">
-                            
-                        </li> -->
-                        <!--<li>
+                        </li>                        <!--<li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -422,96 +390,65 @@
                         <div class="panel panel-default">
 
                             <div class="panel-heading">
-                                <b>Questions<b>
+                                <b>Upload Questions<b>
                                 <span class="pull-right" role="menu"><a href="leader.html" class="btn btn-success btn-xs">Leaderboard!</a></span>
                             </div>
                         <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr class="odd gradeX">
-                                            <th>Sr No.</th>
-                                            <th>Question</th>
-                                            <th>Difficulty</th>
-                                            <th>Status</th>
-                                            <th>Score</th>
-                                            <th>Preiview</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="odd gradeX" ng-repeat="name in display" id="displayQues">
-                                            <td>{{name.id + 1}}</td>
-                                            <td>{{name.ques}}</td>
-                                            <td>Easy</td>                                            
-                                            <td><img src="" width="20" height="20" id="{{name.ques}}""></td>
-                                            <td>{{name.marks}}</td>
-                                            <td><a ng-click="goTo(name.ques)" target="_blank" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-<!-- 
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Arpa’s hard exam and Mehrdad’s naive cheat</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="naive"></td>
-                                            <td><a href="questions/naive/naive.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>2</td>
-                                            <td>Ostap and Grasshopper</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="grasshopper"></td>
-                                            <td><a href="questions/ostap/ostap.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>3</td>
-                                            <td>Anton and Danik</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="chess"></td>
-                                            <td><a href="questions/aston/aston.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>4</td>
-                                            <td>Modular Exponentiation</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="power"></td>
-                                            <td><a href="questions/power/power.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr> -->
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover">
+                            <tbody>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Question name : </b></td>
+                                <td height="100"><textarea row="1000" col="50" style="width:100%;height: 100%" ng-model="Qname"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Body : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qbody"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Input Format : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qinp"></textarea></td>   
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Output Format : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qout"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Input #1 : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qi1"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Output #1 : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qo1"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Input #2 : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qi2"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Output #2 : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qo2"></textarea> </td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Input #3 : </b></td>
+                                <td height="100"> <textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qi3"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td height="100"><b>Output #3 : </b></td>
+                                <td height="100"><textarea row="1000" col="900" style="width:100%;height: 100%" ng-model="Qo3"></textarea></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                            <td ><button class="btn btn-success" ng-click="getParams(Qname,Qbody,Qinp,Qout,Qi1,Qo1,Qi2,Qo2,Qi3,Qo3)">Upload!</button></td>
+                            <td >{{createdMess}}</td>
+                            </tr>
                             
+                            </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <!-- /.col-lg-12 -->
-                    <div class="col-lg-8"><br>
-                        <div class="panel panel-success">
-
-                            <div class="panel-heading">
-                                <b>Top 10 in Leaderboard.</b>
-                            </div>
-
-                            <div class="panel-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr class="odd gradeX">
-                                            <th>User #</th>
-                                            <th>Username</th>
-                                            <th>Score</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr id="inside" class="odd gradeX" ng-repeat="(x, score) in allS">
-                                            <td>{{score[2]+1}}</td>
-                                            <td>{{score[0]}}</td>
-                                            <td>{{score[1]}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <b><div id="totalM"></div></b>
-                            </div>
-                         </div>
-                </div>
+                    
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
@@ -523,6 +460,7 @@
 
 
     </div>
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -537,15 +475,6 @@
     <!-- Custom Theme JavaScript -->
     <script src="./startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
 
-    <script src="login.js"></script>
-    
-    <script type="text/javascript">
-
-    </script>
-
-
 </body>
-
-
 
 </html>

@@ -13,11 +13,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     
-    <style type="text/css">
-        #tellMessage{
-            display: none;
-        }
-    </style>
+    <script src="newContest.js"></script>
+    <!-- <script src="login.js"></script> -->
 
     <!-- Bootstrap Core CSS -->
     <link href="./startbootstrap-sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -30,8 +27,17 @@
 
     <!-- Custom Fonts -->
     <link href="./startbootstrap-sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
     <style type="text/css">
+        #tellMessage{
+            display: none;
+        }
+    </style>
+    <style type="text/css">
+        #second {
+            width: 100%;
+            height: 500px;
+            display: none;
+        }
         #inside:nth-child({{idex}}){
                 background-color: GreenYellow !important;
                 font-family: Arial;
@@ -420,103 +426,81 @@
                 <div class="row">
                     <div class="col-lg-12"><h1></h1>
                         <div class="panel panel-default">
-
-                            <div class="panel-heading">
-                                <b>Questions<b>
-                                <span class="pull-right" role="menu"><a href="leader.html" class="btn btn-success btn-xs">Leaderboard!</a></span>
-                            </div>
-                        <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr class="odd gradeX">
-                                            <th>Sr No.</th>
-                                            <th>Question</th>
-                                            <th>Difficulty</th>
-                                            <th>Status</th>
-                                            <th>Score</th>
-                                            <th>Preiview</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="odd gradeX" ng-repeat="name in display" id="displayQues">
-                                            <td>{{name.id + 1}}</td>
-                                            <td>{{name.ques}}</td>
-                                            <td>Easy</td>                                            
-                                            <td><img src="" width="20" height="20" id="{{name.ques}}""></td>
-                                            <td>{{name.marks}}</td>
-                                            <td><a ng-click="goTo(name.ques)" target="_blank" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-<!-- 
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Arpa’s hard exam and Mehrdad’s naive cheat</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="naive"></td>
-                                            <td><a href="questions/naive/naive.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>2</td>
-                                            <td>Ostap and Grasshopper</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="grasshopper"></td>
-                                            <td><a href="questions/ostap/ostap.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>3</td>
-                                            <td>Anton and Danik</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="chess"></td>
-                                            <td><a href="questions/aston/aston.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>4</td>
-                                            <td>Modular Exponentiation</td>
-                                            <td>Easy</td>
-                                            <td><img src="" width="20" height="20" id="power"></td>
-                                            <td><a href="questions/power/power.html" class="btn btn-success btn-block">Solve</a></td>
-                                        </tr> -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    <!-- /.col-lg-12 -->
-                    <div class="col-lg-8"><br>
-                        <div class="panel panel-success">
-
-                            <div class="panel-heading">
-                                <b>Top 10 in Leaderboard.</b>
-                            </div>
-
+                            <div class="panel-heading">Create a new contest.</div>
                             <div class="panel-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
-                                        <tr class="odd gradeX">
-                                            <th>User #</th>
-                                            <th>Username</th>
-                                            <th>Score</th>
-                                        </tr>
+
                                     </thead>
                                     <tbody>
-                                        <tr id="inside" class="odd gradeX" ng-repeat="(x, score) in allS">
-                                            <td>{{score[2]+1}}</td>
-                                            <td>{{score[0]}}</td>
-                                            <td>{{score[1]}}</td>
+                                        <tr class="odd gradeX" >
+                                            <td>Enter number of questions :</td>
+                                            <td><input type="text" ng-model="numberQuestion" ></td>
                                         </tr>
+                                        <tr class="odd gradeX" >
+                                            <td>Enter the start date of the contest : </td>
+                                            <td><input type="date" ng-model="contestDate"></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Enter the start time of the contest : </td>
+                                            <td><input type="time" ng-model="contestTime"></td>
+                                        </tr>
+                                        
+                                        <tr class="odd gradeX">
+                                            <td>Enter the duration of the contest : </td>
+                                            <td><input type="time" ng-model="contestDuration"></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td><a class="btn btn-success btn-sm" ng-click="callDown()" onclick="">Next</a></td>
+                                            <td></td>
+                                        </tr>    
                                     </tbody>
+
                                 </table>
-                                <b><div id="totalM"></div></b>
                             </div>
-                         </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
+
+
+        <div id="second">
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12"><h1></h1>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Create a new contest.</div>
+                                <div class="panel-body">
+                                    <table width="100%" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr class="odd gradeX">
+                                                <td><b>Question #</b></td>
+                                                <td><b>Link to upload.</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="odd gradeX" ng-repeat="num in run">
+                                                <td><b>Question {{num+1}}:</b></td>
+                                                <td><a href="http://localhost:3000/uploadQuestion2.html" class="btn btn-primary btn-sm" >Upload!</a></td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        </div>
 
 
 
@@ -537,7 +521,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="./startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
 
-    <script src="login.js"></script>
+    
     
     <script type="text/javascript">
 
