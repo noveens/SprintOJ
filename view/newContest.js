@@ -6,31 +6,37 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
     var buttn=[];
     $scope.contestNum=0;
 
+    console.log(localStorage['linka']);
 
 
       $scope.createContest=function(){
+        
+        $http.get('/getContestNum')
+        .success(function(response){
+          alert('get contest num says'+response);
+          $scope.contestNum=response;
+        });
 
-      var link='/newContest?numQuestion='+$scope.numberQuestion+'&startDate='+$scope.contestDate+'&startTime='+$scope.contestTime+'&duration='+$scope.contestDuration+'&contestNum='+$scope.contestNum;
-      alert(localStorage['link']+'Aman sir');
-
-      $http.get('/getContestNum')
-      .success(function(response){
-        $scope.contestNum=response;
-      })
-
-
-      $http.get(localStorage['link'])
-      .success(function(response){
-        console.log(response);
-      })
+        var link='/newContest?numQuestion='+$scope.numberQuestion+'&startDate='+$scope.contestDate+'&startTime='+$scope.contestTime+'&duration='+$scope.contestDuration+'&contestNum='+$scope.contestNum;
+        alert(localStorage['linka']+'Aman sir');
 
 
-      $http.get('/addContestNum')
-      .success(function(response){
-        alert(response+'pikachu')
-        console.log(response);
-      });
-    }
+        $http.get(localStorage['linka'])
+        .success(function(response){
+          alert('New Contest says : '+response);
+          console.log(response);
+        });
+
+
+        $http.get('/addContestNum')
+        .success(function(response){
+          alert('Add contest says : '+response);
+          console.log(response);
+          localStorage['linka']=undefined;
+        });
+
+
+    };
 
 
 
@@ -43,12 +49,12 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
       localStorage.setItem('numberOfEntries','undefined');
       localStorage['taskList']=undefined;
       localStorage['count']=0;
-      $scope.createContest();
-      localStorage['link']=undefined;
-      window.location = "home.html";
+      //$scope.createContest();
+      //localStorage['linka']=undefined;
+      //window.location = "home.html";
     }
     if(localStorage['taskList']=='undefined'){
-      localStorage['link']=undefined;
+      //localStorage['linka']=undefined;
       localStorage['taskList']=JSON.stringify($scope.index);
       console.log(localStorage['taskList']);
     }  
@@ -67,13 +73,31 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
 
     $scope.callDown=function(){ 
 
-      var link='/newContest?numQuestion='+$scope.numberQuestion+'&startDate='+$scope.contestDate+'&startTime='+$scope.contestTime+'&duration='+$scope.contestDuration+'&contestNum='+$scope.contestNum;
-      alert(localStorage['link']);
-      if(localStorage['link']=='undefined'){
-        alert('sxy bitch');
-        localStorage['link']=link;
-      }
 
+
+
+      $http.get('/getContestNum')
+      .success(function(response){
+          alert('get contest num says'+response);
+          $scope.contestNum=response;
+          var link='/newContest?numQuestion='+$scope.numberQuestion+'&startDate='+$scope.contestDate+'&startTime='+$scope.contestTime+'&duration='+$scope.contestDuration+'&contestNum='+$scope.contestNum;
+          //localStorage['linka']=link;
+          alert('Initial value of link : ' + localStorage['linka']);
+          if(localStorage['linka']=='undefined'){
+            alert('sxy bitch');
+            
+            localStorage['linka']=link;
+            alert('Link is :'+localStorage['linka']);
+          }
+
+      });
+
+
+
+
+
+
+      
 
       console.log(localStorage['contestNum']);
       localStorage['count']=Number(localStorage['count']) + 1;
@@ -88,6 +112,9 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
       for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i]});}
       smoothScroll(document.getElementById('second'));
     };
+
+
+
 
     $scope.getNumber=function(x){
         $scope.index[x-1]='Done';

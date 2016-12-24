@@ -166,7 +166,7 @@ Logmain.controller('ProjectController', function($scope, $http){
 
 
 		localStorage.setItem('clicked',1);
-		alert(localStorage.getItem('clicked'));
+		//alert(localStorage.getItem('clicked'));
 
 		window.history.back();
 
