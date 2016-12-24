@@ -946,6 +946,79 @@ app.get("/addContestNum", function(request, response) {
 	});
 });
 
+app.post("/uploadContest", function(request, response) {
+	var sampleFile;
+	var lang = request.query.lang;
+	var extension  = ".cpp";
+	var hour = new Date().getHours();
+	var min = new Date().getMinutes();
+
+    if (!request.files) {
+        response.send('No files were uploaded.');
+        return;
+    }
+
+    sampleFile = request.files.code;
+    if(lang == "Java") extension = ".java";
+    if(lang == "C++") extension = ".cpp";
+    if(lang == "C") extension = ".c";
+    if(lang == "Python") extension = ".py";
+
+    console.log(extension);
+    sampleFile.mv('./temp/code'+ extension, function(err) {
+        if (err) {
+            response.status(500).send('some error occured!');
+        }
+        else {
+        	var send = [];
+        	var c = 0;
+        	var name = request.body.name;
+        	console.log("require");
+        	console.log(name);
+            for(var i=1;i<=3;i++) {
+				exec("bash ./bash/script.sh " + name + " " + i + " " +extension, function puts(error, stdout, stderr) { 
+					if(stdout[2] == "0") {
+
+						console.log(stdout[0]);
+						var tt = {};
+						tt[stdout[0]] = 1;
+						send.push(tt);
+					}
+					else {
+						var tt = {};
+						tt[stdout[0]] = 0;
+						send.push(tt);
+					}
+					c++;
+					if(c == 3) {
+						fs.readFile("./liveContest.csv", function(err, data) {
+							var temp = data.toString().split(",")[2];
+							var hour_c = temp.split(":")[0];
+							var min_c = temp.split(":")[1];
+
+							var score = Number((name[name.length-1].charCodeAt(0) - 64) * 500) -  
+							Math.floor(
+							(Number(0.005) * Number( (hour - hour_c)*60 + (min - min_c) )) * 
+							(Number((name[name.length-1].charCodeAt(0) - 64) * 500))
+							);
+
+					    	console.log("current time; hours = " + Number(hour) + " , min = " + 
+							Number(min) + " \ncontest time; hours = " + Number(hour_c) + " , min = " + 
+							Number(min_c) + "\nscore = " + Number(score));
+
+							var ttt = {};
+							ttt['score'] = score;
+							send.push(ttt);
+
+							response.send(send);
+						});
+					}
+				});
+	        }
+        }
+    });
+});
+
 var port = process.env.PORT || 3000
 
 var server = app.listen(port, function() {
