@@ -4,23 +4,78 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
     $scope.run=[];
     $scope.index=[];
     var buttn=[];
+    $scope.contestNum=0;
+
+
+
+      $scope.createContest=function(){
+
+      var link='/newContest?numQuestion='+$scope.numberQuestion+'&startDate='+$scope.contestDate+'&startTime='+$scope.contestTime+'&duration='+$scope.contestDuration+'&contestNum='+$scope.contestNum;
+      alert(localStorage['link']+'Aman sir');
+
+      $http.get('/getContestNum')
+      .success(function(response){
+        $scope.contestNum=response;
+      })
+
+
+      $http.get(localStorage['link'])
+      .success(function(response){
+        console.log(response);
+      })
+
+
+      $http.get('/addContestNum')
+      .success(function(response){
+        alert(response+'pikachu')
+        console.log(response);
+      });
+    }
+
+
+
+
+
+
     for(i=0;i<10;i++){$scope.index[i]='Upload!';}
     for(i=0;i<10;i++){buttn[i]='Done';}
     if((localStorage['taskList'].match(/Done/g) || []).length==localStorage.getItem('numberOfEntries')){
       localStorage.setItem('numberOfEntries','undefined');
       localStorage['taskList']=undefined;
       localStorage['count']=0;
-
+      $scope.createContest();
+      localStorage['link']=undefined;
       window.location = "home.html";
     }
-    if(localStorage['taskList']=='undefined'){localStorage['taskList']=JSON.stringify($scope.index);console.log(localStorage['taskList']);}  
+    if(localStorage['taskList']=='undefined'){
+      localStorage['link']=undefined;
+      localStorage['taskList']=JSON.stringify($scope.index);
+      console.log(localStorage['taskList']);
+    }  
     $scope.numberQuestion=localStorage.getItem('numberOfEntries')=='undefined'?'':localStorage.getItem('numberOfEntries');
     //if($scope.numberQuestion==undefined){$scope.numberQuestion=0;}
 
 
 
+
+
+  
+
+
+
+
+
     $scope.callDown=function(){ 
-      console.log(localStorage['count']);
+
+      var link='/newContest?numQuestion='+$scope.numberQuestion+'&startDate='+$scope.contestDate+'&startTime='+$scope.contestTime+'&duration='+$scope.contestDuration+'&contestNum='+$scope.contestNum;
+      alert(localStorage['link']);
+      if(localStorage['link']=='undefined'){
+        alert('sxy bitch');
+        localStorage['link']=link;
+      }
+
+
+      console.log(localStorage['contestNum']);
       localStorage['count']=Number(localStorage['count']) + 1;
       localStorage.setItem('clicked',0);
       localStorage.setItem('numberOfEntries',$scope.numberQuestion);

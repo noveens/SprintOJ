@@ -5,7 +5,7 @@ var Logmain=angular.module('ProjectApp',[]);
 var scoresAll;
 
 Logmain.controller('ProjectController', function($scope, $http){
-	
+	$scope.contestNum=0;	
 	$scope.idex=-1;
 	$scope.isadmin="";
 	$scope.marks=[];
@@ -149,6 +149,8 @@ Logmain.controller('ProjectController', function($scope, $http){
 		if(Qo1){qo1=qo1.replace('\n','$20');}
 		if(Qo2){qo2=qo2.replace('\n','$20');}
 		if(Qo2){qo3=qo3.replace('\n','$20');}
+
+		
 
 		var tc=qi1+','+qo1+";"+qi2+','+qo2+";"+qi3+','+qo3;
 		var link='/createQues?text='+qbody+'&test='+tc+'&inform='+qinp+'&outform='+qout+'&name='+qname;

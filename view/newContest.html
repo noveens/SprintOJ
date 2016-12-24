@@ -439,19 +439,19 @@
                                         </tr>
                                         <tr class="odd gradeX" >
                                             <td><b>Enter the start date of the contest : </b></td>
-                                            <td><input type="date" ng-model="contestDate"></td>
+                                            <td><input type="text" ng-model="contestDate" placeholder="Format dd/mm/yyyy"></td>
                                         </tr>
                                         <tr class="odd gradeX">
                                             <td><b>Enter the start time of the contest : </b></td>
-                                            <td><input type="time" ng-model="contestTime"></td>
+                                            <td><input type="text" ng-model="contestTime" placeholder="Format hh:mm"></td>
                                         </tr>
                                         
                                         <tr class="odd gradeX">
                                             <td><b>Enter the duration of the contest : </b></td>
-                                            <td><input type="time" ng-model="contestDuration"></td>
+                                            <td><input type="text" ng-model="contestDuration" placeholder="In minutes"></td>
                                         </tr>
                                         <tr class="odd gradeX">
-                                            <td><a class="btn btn-success btn-sm" ng-click="callDown()" onclick="">Next</a></td>
+                                            <td><a class="btn btn-success btn-sm" ng-click="callDown()">Next</a></td>
                                             <td></td>
                                         </tr>    
                                     </tbody>
@@ -491,6 +491,9 @@
                                         </tbody>
 
                                     </table>
+                                </div>
+                                <div class="panel-body">
+                                    <a class="btn btn-success" ng-click="createContest()">Finish!</a>
                                 </div>
                             </div>
                         </div>
