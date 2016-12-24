@@ -17,6 +17,7 @@ app.get('/', function(request, response) {
 	response.redirect("login.html")
 });
 
+
 app.get('/check', function(request, response) {
 
 	fs.readFile('users.csv', function(err, data) {
@@ -879,21 +880,38 @@ app.get("/getRequestAdmin", function(request, response) {
 	});
 });
 
+app.get("/getPendingContest", function(request,response) {
+	fs.readFile("pendingContest.csv", function(err, data) {
+		if(err) {
+			response.send(err);
+		}
+		var data = data.toString().split('\n');
+		response.send(data);
+	});
+});
+
 app.get("/newContest", function(request, response) {
 	var numQuestion = request.query.numQuestion;
 	var startDate = request.query.startDate;
 	var startTime = request.query.startTime;
 	var duration = request.query.duration;
 	var contestNum = request.query.contestNum;
+	if(numQuestion && startTime && startDate && contestNum && duration)
+	{
 
-	fs.appendFile('pendingContest.csv', contestNum+','+startDate+','+startTime+','+duration+','+numQuestion+'\n', function(err) {
-		if(err) {
-			console.log('error = ' + err);
-			response.end('error');
-		}
+		fs.appendFile('pendingContest.csv', contestNum+','+startDate+','+startTime+','+duration+','+numQuestion+'\n', function(err) {
+			if(err) {
+				console.log('error = ' + err);
+				response.end('error');
+			}
 
-		response.end('1');
-	});
+			response.end('1');
+		});
+	}
+	else
+	{
+		response.send("fields cannot be empty");
+	}
 });
 
 app.get("/getContestNum", function(request, response) {
