@@ -5,6 +5,7 @@ var Logmain=angular.module('ProjectApp',[]);
 var scoresAll;
 
 Logmain.controller('ProjectController', function($scope, $http){
+
 	$scope.contestNum=0;	
 	$scope.idex=-1;
 	$scope.isadmin="";
@@ -16,12 +17,21 @@ Logmain.controller('ProjectController', function($scope, $http){
 	$scope.message = "";
 	$scope.Username = "";
 	$scope.allS;
-
+	$scope.newContest=0;
 
 	
 
 
 	$scope.getUserName = function(){
+
+		$http.get('/getContestNum')
+		.success(function(response){
+			alert(response+'is the response');
+			$scope.newContest=response;
+		});
+
+
+
 		var userLoggedIn = localStorage.getItem("storageName");
 		var show="";
 
@@ -152,8 +162,12 @@ Logmain.controller('ProjectController', function($scope, $http){
 
 		
 
+        alert('u cant see me'+localStorage['now']);
+
+
 		var tc=qi1+','+qo1+";"+qi2+','+qo2+";"+qi3+','+qo3;
-		var link='/createQues?text='+qbody+'&test='+tc+'&inform='+qinp+'&outform='+qout+'&name='+qname;
+		var link='/createQues?text='+qbody+'&test='+tc+'&inform='+qinp+'&outform='+qout+'&name='+qname+'&contestNum='+$scope.newContest+'&alpha='+localStorage['now'];
+		alert('Going to '+link);
 		$http.get(link)
 		.success(function(response){
 			console.log('Hi123');

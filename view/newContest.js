@@ -1,5 +1,8 @@
 var myApp = angular.module('ProjectApp', []);
  
+
+var Diff=['A','B','C','D','E','F','G','H','I','J'];
+
 myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http,fileUpload){
     $scope.run=[];
     $scope.index=[];
@@ -111,7 +114,7 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
         $scope.index=temp;
       }
     }
-      for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i]});}
+      for(var i=0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i]});}
       smoothScroll(document.getElementById('second'));
     };
 
@@ -119,6 +122,7 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
 
 
     $scope.getNumber=function(x){
+        localStorage['now']=Diff[x-1];
         $scope.index[x-1]='Done';
         localStorage['taskList']=JSON.stringify($scope.index);
         
