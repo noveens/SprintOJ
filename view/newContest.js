@@ -45,7 +45,7 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
 
     for(i=0;i<10;i++){$scope.index[i]='Upload!';}
     for(i=0;i<10;i++){buttn[i]='Done';}
-    if((localStorage['taskList'].match(/Done/g) || []).length==localStorage.getItem('numberOfEntries')){
+    if((localStorage['taskList'] && localStorage['taskList'].match(/Done/g) || []).length==localStorage.getItem('numberOfEntries')){
       localStorage.setItem('numberOfEntries','undefined');
       localStorage['taskList']=undefined;
       localStorage['count']=0;
@@ -104,11 +104,13 @@ myApp.controller('ProjectController', ['$scope', '$http', function($scope, $http
       localStorage.setItem('clicked',0);
       localStorage.setItem('numberOfEntries',$scope.numberQuestion);
       $scope.numberQuestion=localStorage.getItem('numberOfEntries');
+      if(localStorage['taskList']) {
       console.log(JSON.parse(localStorage['taskList']));
       var temp=JSON.parse(localStorage['taskList']);
       if(temp!= undefined){
         $scope.index=temp;
       }
+    }
       for(var i =0;i<localStorage.getItem('numberOfEntries');i++){$scope.run.push({'index':i,'button':$scope.index[i]});}
       smoothScroll(document.getElementById('second'));
     };
